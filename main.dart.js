@@ -23587,7 +23587,7 @@ case 1:return A.L(q,r)}})
 return A.M($async$XF,r)},
 XB(a,b){var s=0,r=A.N(t.a),q,p,o
 var $async$XB=A.I(function(c,d){if(c===1)return A.K(d,r)
-while(true)switch(s){case 0:A.fb("Attempting login to http://10.220.89.117:5000/login with username: "+b)
+while(true)switch(s){case 0:A.fb("Attempting login to http://10.220.89.117:10000/login with username: "+b)
 s=3
 return A.P(A.jY(new A.XC(b,a),"login"),$async$XB)
 case 3:p=d
@@ -23646,7 +23646,7 @@ var $async$Gi=A.I(function(d,e){if(d===1)return A.K(e,r)
 while(true)switch(s){case 0:A.vV(c)
 p=a.length
 if(p===0)throw A.d(A.i0("Empty file"))
-o=A.aGq("POST",A.dU("http://10.220.89.117:5000/upload"))
+o=A.aGq("POST",A.dU("http://10.220.89.117:10000/upload"))
 o.r.m(0,"Authorization","Bearer "+c)
 n=A.JL("application","octet-stream",null)
 m=A.asp(new A.i8(A.awI(a,t.Cm)))
@@ -23686,7 +23686,7 @@ i=t.z
 h=t.bE
 case 3:if(!(j<=3)){s=4
 break}p=6
-A.FC("Attempt "+A.k(j)+": Requesting http://10.220.89.117:5000/"+b)
+A.FC("Attempt "+A.k(j)+": Requesting http://10.220.89.117:10000/"+b)
 s=9
 return A.P(J.ata(a.$0(),B.iD,new A.Xs(b,j)),$async$jY)
 case 9:n=d
@@ -23727,7 +23727,7 @@ s=p}while(true)switch(s){case 0:j=1
 i=t.z
 case 3:if(!(j<=3)){s=4
 break}p=6
-A.FC("Attempt "+A.k(j)+": Downloading http://10.220.89.117:5000/"+b)
+A.FC("Attempt "+A.k(j)+": Downloading http://10.220.89.117:10000/"+b)
 s=9
 return A.P(J.ata(a.$0(),B.iD,new A.Xr(b,j)),$async$Gh)
 case 9:n=d
@@ -79490,32 +79490,32 @@ case 1:return A.K(p.at(-1),r)}})
 return A.M($async$yg,r)}}
 A.a8P.prototype={}
 A.XG.prototype={
-$0(){var s=A.dU("http://10.220.89.117:5000/signup"),r=t.N,q=A.ai(["Content-Type","application/json"],r,r)
+$0(){var s=A.dU("http://10.220.89.117:10000/signup"),r=t.N,q=A.ai(["Content-Type","application/json"],r,r)
 return A.ape(s,B.bs.xU(A.ai(["username",this.a,"email",this.b,"password",this.c],r,r),null),q)},
 $S:39}
 A.XC.prototype={
-$0(){var s=A.dU("http://10.220.89.117:5000/login"),r=t.N,q=A.ai(["Content-Type","application/json"],r,r)
+$0(){var s=A.dU("http://10.220.89.117:10000/login"),r=t.N,q=A.ai(["Content-Type","application/json"],r,r)
 return A.ape(s,B.bs.xU(A.ai(["username",this.a,"password",this.b],r,r),null),q)},
 $S:39}
 A.XE.prototype={
 $0(){var s=t.N
-return A.ape(A.dU("http://10.220.89.117:5000/logout"),null,A.ai(["Authorization","Bearer "+A.k(this.a)],s,s))},
+return A.ape(A.dU("http://10.220.89.117:10000/logout"),null,A.ai(["Authorization","Bearer "+A.k(this.a)],s,s))},
 $S:39}
 A.Xu.prototype={
-$0(){var s=A.dU("http://10.220.89.117:5000/change-password"),r=t.N,q=A.ai(["Content-Type","application/json","Authorization","Bearer "+A.k($.jZ)],r,r)
+$0(){var s=A.dU("http://10.220.89.117:10000/change-password"),r=t.N,q=A.ai(["Content-Type","application/json","Authorization","Bearer "+A.k($.jZ)],r,r)
 return A.ape(s,B.bs.xU(A.ai(["currentPassword",this.a,"newPassword",this.b],r,r),null),q)},
 $S:39}
 A.Xy.prototype={
 $0(){var s=t.N
-return A.asd(A.dU("http://10.220.89.117:5000/dashboard"),A.ai(["Authorization","Bearer "+A.k($.jZ)],s,s))},
+return A.asd(A.dU("http://10.220.89.117:10000/dashboard"),A.ai(["Authorization","Bearer "+A.k($.jZ)],s,s))},
 $S:39}
 A.XA.prototype={
 $0(){var s=t.N
-return A.asd(A.dU("http://10.220.89.117:5000/files"),A.ai(["Authorization","Bearer "+A.k($.jZ)],s,s))},
+return A.asd(A.dU("http://10.220.89.117:10000/files"),A.ai(["Authorization","Bearer "+A.k($.jZ)],s,s))},
 $S:39}
 A.Xw.prototype={
 $0(){var s=t.N
-return A.asd(A.dU("http://10.220.89.117:5000/download/"+this.a),A.ai(["Authorization","Bearer "+A.k($.jZ)],s,s))},
+return A.asd(A.dU("http://10.220.89.117:10000/download/"+this.a),A.ai(["Authorization","Bearer "+A.k($.jZ)],s,s))},
 $S:39}
 A.Xs.prototype={
 $0(){var s="Timeout on "+this.a
