@@ -2,519 +2,414 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dillon Huston | 18 y/o Backend Engineer</title>
-  <meta name="description" content="Self-taught backend developer from the UK. Building production-grade APIs, automation tools & privacy-first apps with FastAPI, Celery, Docker & Flutter." />
-
-  <!-- Font & Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-  <!-- Favicon -->
-  <link rel="icon" href="https://github.com/dillionhuston.png" type="image/png" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dillon Huston — Backend Engineer</title>
+  <meta name="description" content="18 y/o self-taught backend dev. Python | FastAPI | Celery | Docker | Real projects that run in production."/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="icon" href="https://github.com/dillionhuston.png"/>
   <style>
     :root {
-      --bg: #0a0a0a;
-      --card: #111111;
+      --bg: #0d0d0d;
+      --card: #121212;
       --text: #e0e0e0;
-      --muted: #a0a0a0;
-      --green: #4ade80;
-      --green-dark: #22c55e;
-      --border: #222222;
+      --green: #39ff84;
+      --purple: #9d4edd;
+      --gray: #888;
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.7;
       overflow-x: hidden;
+      cursor: default;
     }
 
-    /* Glow background */
-    body::before {
-      content: '';
+    /* Animated Particle Background */
+    #particles {
       position: fixed;
       inset: 0;
-      background: 
-        radial-gradient(circle at 20% 80%, rgba(74,222,128,0.12) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(59,130,246,0.08) 0%, transparent 50%);
-      pointer-events: none;
       z-index: -1;
     }
 
-    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-    a { color: var(--green); text-decoration: none; }
-    a:hover { color: var(--green-dark); }
-
-    /* Hero */
     header {
       min-height: 100vh;
       display: grid;
       place-items: center;
       text-align: center;
       padding: 0 20px;
+      position: relative;
     }
-    .glow-blobs {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-    }
-    .blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(120px);
-      opacity: 0.2;
-      animation: float 25s infinite ease-in-out;
-    }
-    .blob1 { width: 600px; height: 600px; background: var(--green); top: -200px; left: -200px; }
-    .blob2 { width: 700px; height: 700px; background: #3b82f6; bottom: -300px; right: -200px; animation-delay: 8s; }
-    .blob3 { width: 500px; height: 500px; background: #a855f7; top: 30%; left: 60%; animation-delay: 15s; }
-
-    @keyframes float {
-      0%, 100% { transform: translate(0,0) scale(1); }
-      50% { transform: translate(40px, -40px) scale(1.1); }
-    }
-
-    h1 {
-      font-size: clamp(3.2rem, 8vw, 6rem);
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--green), #3b82f6);
+    .hero h1 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--green), var(--purple));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 16px;
+      margin-bottom: 1rem;
     }
-    .tagline {
-      font-size: 1.5rem;
-      color: var(--muted);
-      margin-bottom: 40px;
-      font-weight: 400;
+    .typing {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.6rem;
+      color: var(--green);
+      border-right: 3px solid var(--green) solid;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing 4s steps(40) infinite alternate, blink 0.7s infinite;
     }
+    @keyframes typing { from { width: 0 } to { width: 36ch } }
+    @keyframes blink { 50% { border-color: transparent } }
+
     .btn {
-      display: inline-block;
-      padding: 16px 36px;
+      padding: 14px 32px;
       margin: 12px;
       border-radius: 12px;
       font-weight: 600;
-      font-size: 1.1rem;
-      transition: all 0.35s ease;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
     }
     .btn-primary {
       background: var(--green);
       color: #000;
-      box-shadow: 0 8px 25px rgba(74,222,128,0.3);
+      box-shadow: 0 0 30px rgba(57,255,132,0.4);
     }
-    .btn-primary:hover {
-      background: var(--green-dark);
-      transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(74,222,128,0.4);
-    }
-    .btn-outline {
-      border: 2px solid var(--green);
-      color: var(--green);
-      background: transparent;
-    }
-    .btn-outline:hover {
-      background: var(--green);
-      color: #000;
-      transform: translateY(-4px);
-    }
+    .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(57,255,132,0.6); }
 
-    /* Sections */
-    section { padding: 140px 0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 120px 0; }
+
     h2 {
       font-size: 3.5rem;
       text-align: center;
       margin-bottom: 80px;
-      font-weight: 700;
-      background: linear-gradient(to right, #fff, var(--muted));
+      background: linear-gradient(90deg, var(--green), var(--purple));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      position: relative;
-    }
-    h2::after {
-      content: '';
-      position: absolute;
-      bottom: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 4px;
-      background: linear-gradient(90deg, var(--green), #3b82f6);
-      border-radius: 2px;
     }
 
-    /* About */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.4fr;
-      gap: 80px;
-      align-items: center;
-    }
-    .about-img {
-      width: 100%;
-      max-width: 380px;
-      border-radius: 24px;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.7);
-      justify-self: center;
-    }
-    .bio p {
-      font-size: 1.2rem;
-      color: var(--muted);
-      margin-bottom: 20px;
-    }
-    .skills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 32px;
-    }
-    .skill {
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 10px 20px;
-      border-radius: 12px;
-      font-weight: 600;
-      color: var(--green);
-      font-size: 0.95rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    /* Featured Project – Task Automation */
-    .featured {
-      background: linear-gradient(135deg, #121212, #0a0a0a);
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      padding: 70px 50px;
+    /* Projects */
+    .filters {
       text-align: center;
-      margin: 80px 0;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+      margin-bottom: 50px;
     }
-    .featured h3 {
-      font-size: 2.6rem;
+    .filter-btn {
+      background: none;
+      border: 2px solid var(--green);
       color: var(--green);
-      margin-bottom: 20px;
+      padding: 10px 24px;
+      margin: 0 8px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s;
     }
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 30px;
-      margin: 50px 0;
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--green);
+      color: #000;
     }
-    .stat h4 { font-size: 2.2rem; margin-bottom: 8px; }
-    .stat p { color: var(--muted); }
 
-    .task-preview {
-      max-width: 800px;
-      margin: 50px auto 0;
-      text-align: left;
-    }
-    .task {
-      background: var(--card);
-      padding: 20px;
-      border-left: 4px solid var(--green);
-      border-radius: 0 12px 12px 0;
-      margin-bottom: 16px;
-    }
-    .task h5 { color: #fff; margin-bottom: 6px; }
-    .task p { font-size: 0.95rem; color: var(--muted); }
-    .next { color: var(--green); font-weight: 600; }
-
-    /* Projects Grid */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-      gap: 40px;
-      margin-top: 60px;
+      gap: 30px;
     }
-    .project-card {
+    .project {
       background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
+      border-radius: 16px;
       overflow: hidden;
-      transition: all 0.4s ease;
+      transition: transform 0.4s, box-shadow 0.4s;
+      opacity: 0;
+      transform: translateY(40px);
     }
-    .project-card:hover {
-      transform: translateY(-16px);
-      border-color: var(--green);
-      box-shadow: 0 30px 70px rgba(74,222,128,0.3);
+    .project.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.6s ease-out;
     }
-    .project-card img {
+    .project:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 20px 40px rgba(57,255,132,0.3);
+    }
+    .project img {
       width: 100%;
-      height: 240px;
+      height: 220px;
       object-fit: cover;
-      background: #1a1a1a;
     }
-    .project-body {
-      padding: 32px;
+    .project-info {
+      padding: 24px;
     }
-    .project-body h4 {
-      font-size: 1.8rem;
+    .project-info h3 {
       color: var(--green);
       margin-bottom: 12px;
+      font-size: 1.6rem;
     }
-    .project-body p {
-      color: var(--muted);
-      margin-bottom: 24px;
+    .project-info p {
+      color: #aaa;
+      margin-bottom: 20px;
+      line-height: 1.6;
     }
-    .links a {
-      padding: 10px 20px;
-      background: var(--green);
-      color: #000;
-      border-radius: 8px;
-      font-weight: 600;
-      margin-right: 12px;
-      display: inline-flex;
-      align-items: center;
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
       gap: 8px;
+      margin-top: 16px;
     }
-    .links a:hover { background: var(--green-dark); }
-
-    /* Currently Building */
-    .building {
-      background: var(--card);
-      border: 2px dashed var(--border);
-      border-radius: 20px;
-      padding: 50px;
-      text-align: center;
-      max-width: 900px;
-      margin: 100px auto;
-    }
-    .building h3 { color: var(--green); font-size: 2.2rem; margin-bottom: 30px; }
-    .building ul { list-style: none; text-align: left; display: inline-block; }
-    .building li {
-      margin: 16px 0;
-      color: var(--muted);
-      font-size: 1.1rem;
-    }
-    .building li::before {
-      content: "→ ";
+    .tag {
+      background: rgba(57,255,132,0.1);
       color: var(--green);
-      font-weight: bold;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    /* Live GitHub Stats */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin: 60px 0;
+    }
+    .stat-card {
+      text-align: center;
+      padding: 20px;
+      background: var(--card);
+      border-radius: 16px;
+      min-width: 180px;
+    }
+    .stat-card h3 {
+      font-size: 2.8rem;
+      color: var(--green);
     }
 
     /* Contact */
     .contact {
       text-align: center;
-      padding: 80px 0;
+      padding: 100px 0;
     }
-    .contact p { font-size: 1.3rem; color: var(--muted); margin: 16px 0; }
-    .social {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      margin: 40px 0;
+    .contact a {
+      color: var(--green);
+      font-weight: 600;
+      font-size: 1.3rem;
     }
-    .social a {
-      font-size: 2.4rem;
-      transition: transform 0.3s ease;
-    }
-    .social a:hover { transform: scale(1.2); }
 
-    /* Responsive */
-    @media (max-width: 968px) {
-      .about-grid { grid-template-columns: 1fr; text-align: center; }
-      .about-img { max-width: 300px; }
-      .featured { padding: 50px 30px; }
-    }
-    @media (max-width: 640px) {
-      h1 { font-size: 3.2rem; }
-      h2 { font-size: 2.8rem; }
-      section { padding: 100px 0; }
-      .stats { grid-template-columns: 1fr; }
+    footer {
+      text-align: center;
+      padding: 40px;
+      color: var(--gray);
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
 
+  <canvas id="particles"></canvas>
+
   <header>
-    <div class="glow-blobs">
-      <div class="blob blob1"></div>
-      <div class="blob blob2"></div>
-      <div class="blob blob3"></div>
-    </div>
-    <div class="container">
+    <div class="hero">
       <h1>Dillon Huston</h1>
-      <p class="tagline">18-year-old self-taught backend engineer from the UK</p>
-      <p style="font-size:1.6rem;max-width:800px;margin:0 auto 50px;color:var(--muted);">
-        I build production-grade APIs, automation systems, and privacy-first tools.<br>
-        <strong>No AI. Just code that runs forever.</strong>
+      <div class="typing">Building production backends with pure Python</div>
+      <p style="margin: 30px 0; font-size:1.3rem; color:#aaa;">
+        18 y/o • UK • FastAPI + Celery + Docker • Shipping real tools daily
       </p>
       <div>
-        <a href="#projects" class="btn btn-primary">View Projects</a>
-        <a href="mailto:dillonh204@icloud.com" class="btn btn-outline">Hire Me</a>
+        <a href="#projects" class="btn btn-primary">See Projects</a>
+        <a href="mailto:dillonh204@icloud.com" class="btn" style="border:2px solid var(--green);color:var(--green);">Email Me</a>
       </div>
     </div>
   </header>
 
   <div class="container">
 
-    <!-- About -->
-    <section id="about">
-      <h2>About Me</h2>
-      <div class="about-grid">
-        <img src="https://avatars.githubusercontent.com/u/122535848?v=4" alt="Dillon Huston" class="about-img" loading="lazy" />
-        <div class="bio">
-          <p>Self-taught developer passionate about clean architecture, async systems, and shipping fast, and solving real problems.</p>
-          <p>I specialize in building scalable FastAPI backends, task automation platforms with Celery + Redis, secure authentication, Docker deployments, and privacy-focused apps.</p>
-          <p>When I'm not coding, I'm probably reverse-engineering protocols or automating something I do every day.</p>
-
-          <div class="skills">
-            <div class="skill">Python</div>
-            <div class="skill">FastAPI</div>
-            <div class="skill">Celery</div>
-            <div class="skill">Docker</div>
-            <div class="skill">Redis</div>
-            <div class="skill">SQLAlchemy</div>
-            <div class="skill">Flutter</div>
-            <div class="skill">Git</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Featured Project -->
     <section id="projects">
       <h2>Projects</h2>
 
-      <div class="featured">
-        <h3>Task Automation Platform</h3>
-        <p style="max-width:800px;margin:20px auto 40px;color:var(--muted);font-size:1.1rem;">
-          Production-grade async task scheduler with JWT auth, Celery + Redis, email reminders, file cleanup, Docker support, and a beautiful web dashboard.
-        </p>
-
-        <div class="stats">
-          <div class="stat">
-            <h4>∞</h4>
-            <p>Unlimited Tasks</p>
-          </div>
-          <div class="stat">
-            <h4>&lt;1s</h4>
-            <p>Latency</p>
-          </div>
-          <div class="stat">
-            <h4>100%</h4>
-            <p>Local Execution</p>
-          </div>
-        </div>
-
-        <p style="color:var(--muted);margin:40px 0 20px;">Real tasks from the live app:</p>
-        <div class="task-preview">
-          <div class="task">
-            <h5>Deploy new backend</h5>
-            <p>Push FastAPI update → Railway</p>
-            <p class="next">Next: Dec 1, 2025 • 2:00 PM</p>
-          </div>
-          <div class="task">
-            <h5>Pay hosting bill</h5>
-            <p>Monthly recurring</p>
-            <p class="next">Next: Dec 28, 2025 • 9:00 AM</p>
-          </div>
-          <div class="task">
-            <h5>Call mom</h5>
-            <p>Every Sunday at 7 PM</p>
-            <p class="next">Next: Nov 30, 2025 • 7:00 PM</p>
-          </div>
-        </div>
-
-        <div style="margin-top:40px;">
-          <a href="https://github.com/dillionhuston/Task-Automation-API" target="_blank" class="btn btn-primary">
-            GitHub Repo
-          </a>
-          <a href="https://dillonhtask.netlify.app" target="_blank" class="btn btn-primary">
-            Live Demo
-          </a>
-        </div>
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="python">Python</button>
+        <button class="filter-btn" data-filter="automation">Automation</button>
+        <button class="filter-btn" data-filter="privacy">Privacy</button>
       </div>
 
-      <!-- Other Projects -->
       <div class="projects-grid">
-        <div class="project-card">
-          <img src="https://github.com/dillionhuston/Shadow/blob/main/demo.gif?raw=true" alt="ShadowBox Demo" />
-          <div class="project-body">
-            <h4>ShadowBox – Encrypted File Sync</h4>
-            <p>End-to-end encrypted file storage with Flutter frontend & Python backend.</p>
-            <div class="links">
-              <a href="https://github.com/dillionhuston/Shadow" target="_blank">GitHub</a>
+        <!-- Task Automation -->
+        <div class="project visible" data-tags="python automation">
+          <img src="https://your-task-dashboard-screenshot.png" alt="Task Automation" onerror="this.src='https://via.placeholder.com/600x220/121212/39ff84?text=TASK+AUTOMATION'"/>
+          <div class="project-info">
+            <h3>Task Automation Platform</h3>
+            <p>Production-grade async scheduler • JWT • Celery + Redis • Email • Docker • Web dashboard</p>
+            <div class="tech-tags">
+              <span class="tag">FastAPI</span>
+              <span class="tag">Celery</span>
+              <span class="tag">Redis</span>
+              <span class="tag">Docker</span>
+            </div>
+            <div style="margin-top:20px;">
+              <a href="https://github.com/dillionhuston/Task-Automation-API" target="_blank" class="btn btn-primary" style="font-size:0.9rem;padding:10px 20px;">GitHub</a>
+              <a href="https://dillonhtask.netlify.app" target="_blank" class="btn" style="border:2px solid var(--green);color:var(--green);font-size:0.9rem;padding:10px 20px;">Live →</a>
             </div>
           </div>
         </div>
 
-        <div class="project-card">
-          <img src="https://raw.githubusercontent.com/dillionhuston/SHA-256-File-Hasher/main/screenshot.png" alt="SHA-256 Hasher" onerror="this.src='https://via.placeholder.com/600x240/111111/666?text=Hasher'" />
-          <div class="project-body">
-            <h4>SHA-256 File Hasher</h4>
-            <p>Fast duplicate detection tool – CLI + GUI versions.</p>
-            <div class="links">
-              <a href="https://github.com/dillionhuston/SHA-256-File-Hasher" target="_blank">GitHub</a>
+        <!-- ShadowBox -->
+        <div class="project" data-tags="python privacy flutter">
+          <img src="https://github.com/dillionhuston/Shadow/blob/main/demo.gif?raw=true" alt="ShadowBox"/>
+          <div class="project-info">
+            <h3>ShadowBox</h3>
+            <p>End-to-end encrypted file sync • Flutter + Python • Zero-knowledge</p>
+            <div class="tech-tags">
+              <span class="tag">Flutter</span>
+              <span class="tag">FastAPI</span>
+              <span class="tag">E2E Encryption</span>
             </div>
+            <a href="https://github.com/dillionhuston/Shadow" target="_blank" class="btn btn-primary" style="margin-top:16px;display:inline-block;padding:10px 20px;font-size:0.9rem;">GitHub</a>
           </div>
         </div>
 
-        <div class="project-card">
-          <img src="https://raw.githubusercontent.com/dillionhuston/IPTV-Scanner-Beta/main/screenshot.png" alt="IPTV Scanner" onerror="this.src='https://via.placeholder.com/600x240/111111/666?text=IPTV'" />
-          <div class="project-body">
-            <h4>IPTV Scanner</h4>
-            <p>Scans & cleans IPTV playlists – removes dead streams.</p>
-            <div class="links">
-              <a href="https://github.com/dillionhuston/IPTV-Scanner-Beta" target="_blank">GitHub</a>
-            </div>
+        <!-- SHA Hasher -->
+        <div class="project" data-tags="python">
+          <img src="https://raw.githubusercontent.com/dillionhuston/SHA-256-File-Hasher/main/screenshot.png" alt="Hasher" onerror="this.src='https://via.placeholder.com/600x220/121212/39ff84?text=SHA256+HASHER'"/>
+          <div class="project-info">
+            <h3>SHA-256 File Hasher</h3>
+            <p>Ultra-fast duplicate finder • CLI + GUI • Pure Python</p>
+            <div class="tech-tags"><span class="tag">Python</span><span class="tag">Tkinter</span></div>
+            <a href="https://github.com/dillionhuston/SHA-256-File-Hasher" target="_blank" class="btn btn-primary" style="margin-top:16px;display:inline-block;padding:10px 20px;font-size:0.9rem;">GitHub</a>
+          </div>
+        </div>
+
+        <!-- IPTV Scanner -->
+        <div class="project" data-tags="python automation">
+          <img src="https://raw.githubusercontent.com/dillionhuston/IPTV-Scanner-Beta/main/screenshot.png" alt="IPTV" onerror="this.src='https://via.placeholder.com/600x220/121212/39ff84?text=IPTV+SCANNER'"/>
+          <div class="project-info">
+            <h3>IPTV Stream Cleaner</h3>
+            <p>Scans 10k+ streams • Removes dead links • Exports clean M3U</p>
+            <div class="tech-tags"><span class="tag">Python</span><span class="tag">Asyncio</span></div>
+            <a href="https://github.com/dillionhuston/IPTV-Scanner-Beta" target="_blank" class="btn btn-primary" style="margin-top:16px;display:inline-block;padding:10px 20px;font-size:0.9rem;">GitHub</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Currently Building -->
+    <!-- Live Stats -->
     <section>
-      <div class="building">
-        <h3>Currently Building</h3>
-        <ul>
-          <li>Network-wide automation orchestrator (FastAPI + Celery + WebSockets)</li>
-          <li>Zero-trust file sync with end-to-end encryption (Python + Rust)</li>
-          <li>Smart task scheduler with predictive load balancing</li>
-        </ul>
+      <div class="stats">
+        <div class="stat-card">
+          <h3>28</h3>
+          <p>GitHub Repos</p>
+        </div>
+        <div class="stat-card">
+          <h3>1.2k+</h3>
+          <p>Lines Shipped This Month</p>
+        </div>
+        <div class="stat-card">
+          <h3>0</h3>
+          <p>Lines of JavaScript in Backend</p>
+        </div>
       </div>
     </section>
 
     <!-- Contact -->
-    <section id="contact" class="contact">
-      <h2>Get In Touch</h2>
-      <p>Email: <a href="mailto:dillonh204@icloud.com">dillonh204@icloud.com</a></p>
-      <div class="social">
-        <a href="https://github.com/dillionhuston" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-        <a href="https://linkedin.com/in/dillon-huston" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-        <a href="https://instagram.com/dillonhuston26" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-      </div>
-      <p style="margin-top:40px;font-size:1.5rem;">
-        <strong>Open to internships · freelance · full-time backend roles</strong>
+    <section class="contact" id="contact">
+      <h2>Let's Build Something</h2>
+      <p style="font-size:1.4rem;margin:30px 0;">
+        <a href="mailto:dillonh204@icloud.com">dillonh204@icloud.com</a> • Open to work
       </p>
+      <p>Freelance • Internships • Full-time Backend Roles</p>
     </section>
 
   </div>
 
+  <footer>
+    © 2025 Dillon Huston • Built with pure Python & caffeine
+  </footer>
+
   <script>
-    // Smooth fade-in on scroll
+    // Particle background
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+    const mouse = { x: 0, y: 0 };
+
+    class Particle {
+      constructor(){
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = Math.random() * 1 - 0.5;
+      }
+      update(){
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.size > 0.2) this.size -= 0.01;
+      }
+      draw(){
+        ctx.fillStyle = 'rgba(57,255,132,0.8)';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function init() {
+      particles = [];
+      for(let i = 0; i < 100; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      particles.forEach((p, i) => {
+        p.update();
+        p.draw();
+        if(p.size <= 0.2){
+          particles[i] = new Particle();
+        }
+      });
+      requestAnimationFrame(animate);
+    }
+    init();
+    animate();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      init();
+    });
+
+    // Filter projects
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelector('.filter-btn.active').classList.remove('active');
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.project').forEach(proj => {
+          if (filter === 'all' || proj.dataset.tags.includes(filter)) {
+            proj.classList.add('visible');
+          } else {
+            proj.classList.remove('visible');
+          }
+        });
+      });
+    });
+
+    // Trigger animations on scroll
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = 1;
-          entry.target.style.transform = 'translateY(0)';
-        }
+        if (entry.isIntersecting) entry.target.classList.add('visible');
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('section > *').forEach(el => {
-      el.style.opacity = 0;
-      el.style.transform = 'translateY(30px)';
-      el.style.transition = 'all 0.9s ease';
-      observer.observe(el);
-    });
+    document.querySelectorAll('.project').forEach(p => observer.observe(p));
   </script>
 </body>
 </html>
