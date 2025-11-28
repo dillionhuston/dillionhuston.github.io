@@ -3,284 +3,405 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Task Automation Platform • Dillion Huston</title>
-  <meta name="description" content="No AI. Just reliable, local task automation with FastAPI, Celery, Redis, and Docker. Unlimited tasks, sub-second latency, 100% local execution." />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <title>Dillon Huston | Backend Engineer & Automation Specialist</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" href="https://github.com/dillionhuston.png" type="image/png" />
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
-    body { 
-      background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%); 
-      color:#e0e0e0; 
-      line-height:1.7; 
-      scroll-behavior:smooth; 
-      overflow-x:hidden;
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #111111;
+      --text-primary: #e0e0e0;
+      --text-muted: #a0a0a0;
+      --accent-green: #4ade80;
+      --accent-blue: #3b82f6;
+      --border: #222;
+      --glow: rgba(74, 222, 128, 0.1);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      overflow-x: hidden;
       position: relative;
     }
     body::before {
       content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 20% 80%, rgba(74, 222, 128, 0.1) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-                  radial-gradient(circle at 40% 40%, rgba(244, 114, 182, 0.05) 0%, transparent 50%);
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 20% 80%, var(--glow) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
       z-index: -1;
-      pointer-events: none;
     }
-    a { color:#4ade80; text-decoration:none; }
-    a:hover { text-decoration:underline; }
-    img { display:block; border-radius:12px; }
-    .container { max-width:1200px; margin:auto; padding:20px; position: relative; z-index: 1; }
-    /* Header */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+    a { color: var(--accent-green); text-decoration: none; transition: all 0.3s ease; }
+    a:hover { color: #22c55e; }
+    /* Hero */
     header {
-      position:relative;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      min-height:100vh;
-      text-align:center;
-      padding:0 20px;
-      overflow:hidden;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      position: relative;
+      padding: 0 20px;
     }
-    .shape {
-      position:absolute;
-      border-radius:50%;
-      opacity:0.1;
-      filter: blur(80px);
-      animation: float 20s ease-in-out infinite alternate;
+    .glow-bg {
+      position: absolute; inset: 0; overflow: hidden; z-index: 0;
     }
-    .shape1 { width:400px; height:400px; background:#4ade80; top:-100px; left:-100px; }
-    .shape2 { width:500px; height:500px; background:#3b82f6; bottom:-100px; right:-100px; animation-delay:5s; }
-    .shape3 { width:300px; height:300px; background:#f472b6; top:30%; left:70%; animation-delay:10s; }
+    .glow-bg::before, .glow-bg::after, .glow-bg span {
+      content: ''; position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.25;
+    }
+    .glow-bg::before { width: 600px; height: 600px; background: var(--accent-green); top: -200px; left: -200px; }
+    .glow-bg::after { width: 700px; height: 700px; background: var(--accent-blue); bottom: -300px; right: -200px; }
+    .glow-bg span { width: 500px; height: 500px; background: #a855f7; top: 30%; left: 60%; animation: float 25s infinite ease-in-out; }
     @keyframes float {
-      0% { transform: translateY(0) translateX(0) scale(1); }
-      50% { transform: translateY(20px) translateX(10px) scale(1.05); }
-      100% { transform: translateY(-20px) translateX(-10px) scale(0.95); }
+      0%,100% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(40px, -40px) scale(1.1); }
     }
-    header h1 {
-      font-size:4rem; font-weight:700; margin-bottom:16px; color:#fff; z-index:2;
-      opacity:0; transform:translateY(-30px); animation:fadeInUp 1.2s forwards;
-      background: linear-gradient(135deg, #4ade80, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    .hero-content { position: relative; z-index: 2; max-width: 900px; }
+    h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800; margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    header .tagline {
-      font-size:1.2rem; font-weight:300; color:#a0a0a0; margin-bottom:40px; z-index:2;
-      opacity:0; transform:translateY(-20px); animation:fadeInUp 1.2s 0.4s forwards;
-    }
-    header p {
-      font-size:1.6rem; max-width:800px; color:#c0c0c0; margin-bottom:50px; z-index:2;
-      opacity:0; transform:translateY(-20px); animation:fadeInUp 1.2s 0.8s forwards;
-      font-weight:300;
+    .subtitle {
+      font-size: 1.5rem; color: var(--text-muted); margin-bottom: 40px; font-weight: 400;
     }
     .btn {
-      padding:14px 32px; font-size:1.2rem; font-weight:600; border-radius:10px; transition:all 0.4s ease;
-      display:inline-block; margin:12px;
-      opacity:0; transform:translateY(-20px); animation:fadeInUp 1.2s 1.2s forwards; z-index:2;
-      border: none; cursor: pointer;
+      display: inline-block; padding: 16px 36px; margin: 12px;
+      border-radius: 12px; font-weight: 600; font-size: 1.1rem;
+      transition: all 0.35s ease;
     }
-    .btn-primary { background: linear-gradient(135deg, #4ade80, #22c55e); color:#0f0f0f; box-shadow:0 4px 15px rgba(74, 222, 128, 0.3); }
-    .btn-primary:hover { background: linear-gradient(135deg, #22c55e, #16a34a); transform: translateY(-2px); box-shadow:0 6px 20px rgba(74, 222, 128, 0.4); }
-    .btn-secondary { background:#1a1a1a; color:#4ade80; border:2px solid #4ade80; }
-    .btn-secondary:hover { background:#4ade80; color:#0f0f0f; transform: translateY(-2px); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-green), #22c55e); color: #000;
+      box-shadow: 0 4px 15px rgba(74,222,128,0.3);
+    }
+    .btn-primary:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(74,222,128,0.4); }
+    .btn-outline {
+      border: 2px solid var(--accent-green); color: var(--accent-green); background: transparent;
+    }
+    .btn-outline:hover { background: var(--accent-green); color: #000; transform: translateY(-4px); }
     /* Sections */
-    section { padding:120px 20px; }
-    h2 { font-size:3rem; color:#fff; margin-bottom:60px; text-align:center; font-weight:600;
-         opacity:0; transform:translateY(30px); transition:all 0.8s ease; position: relative; }
-    h2::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 60px; height: 3px; background: linear-gradient(135deg, #4ade80, #3b82f6); border-radius: 2px; }
-    /* Features */
-    .features { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:40px; }
-    .feature-card {
-      background:#1a1a1a; border-radius:20px; padding:40px; text-align:center;
-      border:1px solid #2a2a2a; transition: all 0.4s ease;
-      opacity:0; transform:translateY(30px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    section { padding: 140px 0; }
+    h2 {
+      font-size: 3.5rem; text-align: center; margin-bottom: 80px; font-weight: 700;
+      background: linear-gradient(135deg, #fff, var(--text-muted));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      position: relative;
     }
-    .feature-card:hover { transform: translateY(-8px); box-shadow: 0 16px 48px rgba(74, 222, 128, 0.2); border-color: #4ade80; }
-    .feature-icon { font-size: 3rem; margin-bottom: 20px; background: linear-gradient(135deg, #4ade80, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .feature-card h3 { color:#fff; margin-bottom:16px; font-size:1.8rem; }
-    .feature-card p { color:#a0a0a0; font-size:1.05rem; }
-    /* Dashboard */
-    .dashboard {
-      background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
-      border:1px solid #2a2a2a;
-      border-radius:24px;
-      padding:60px;
-      margin:60px 0;
-      box-shadow:0 20px 60px rgba(0,0,0,0.5);
-      opacity:0; transform:translateY(30px); transition:all 0.8s ease;
+    h2::after {
+      content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+      width: 60px; height: 3px; background: linear-gradient(135deg, var(--accent-green), var(--accent-blue)); border-radius: 2px;
     }
-    .dashboard h3 { color:#4ade80; font-size:2.2rem; margin-bottom:30px; text-align:center; }
-    .task-list { list-style: none; }
+    /* About */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1.3fr; gap: 80px; align-items: center;
+    }
+    .about-img {
+      width: 100%; max-width: 380px; border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6); justify-self: center;
+    }
+    .bio-text { font-size: 1.2rem; color: var(--text-muted); }
+    .bio-text p { margin-bottom: 20px; }
+    .skills {
+      display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px;
+    }
+    .skill {
+      background: var(--bg-secondary); border: 1px solid var(--border);
+      padding: 10px 18px; border-radius: 12px; font-weight: 600; color: var(--accent-green);
+      font-size: 0.95rem; display: flex; align-items: center; gap: 8px;
+    }
+    .skill i { font-size: 1.1rem; }
+    /* Featured Project: Task Automation */
+    .featured {
+      background: linear-gradient(135deg, #1a1a1a, #0f0f0f); border: 1px solid var(--border);
+      border-radius: 24px; padding: 60px; margin: 60px 0; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      text-align: center; grid-column: 1 / -1;
+    }
+    .featured h3 { color: var(--accent-green); font-size: 2.2rem; margin-bottom: 30px; }
+    .featured-stats {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin: 30px 0;
+    }
+    .stat { text-align: center; }
+    .stat-icon { font-size: 2.5rem; color: var(--accent-green); margin-bottom: 8px; }
+    .stat-value { font-size: 1.8rem; font-weight: 700; color: #fff; }
+    .stat-label { color: var(--text-muted); font-size: 0.95rem; }
+    .task-list { list-style: none; margin-top: 40px; }
     .task-item {
-      background:#0f0f0f; border-left:4px solid #4ade80; padding:24px; margin-bottom:20px; border-radius:0 12px 12px 0;
-      transition: all 0.3s ease;
+      background: var(--bg-secondary); border-left: 4px solid var(--accent-green);
+      padding: 24px; margin-bottom: 20px; border-radius: 0 12px 12px 0; transition: all 0.3s ease;
     }
-    .task-item:hover { background:#1a1a1a; transform: translateX(8px); }
-    .task-item h4 { color:#fff; margin-bottom:8px; font-size:1.3rem; }
-    .task-item p { color:#a0a0a0; font-size:1rem; margin-bottom:4px; }
-    .task-item .next-run { color:#4ade80; font-weight:500; }
-    /* Tech Stack */
-    .tech-stack { display:flex; flex-wrap:wrap; justify-content:center; gap:16px; margin:40px 0; }
-    .tech-item {
-      background:#1a1a1a; padding:12px 20px; border-radius:12px; font-weight:600;
-      color:#4ade80; font-size:0.95rem; display:flex; align-items:center; gap:8px;
-      border:1px solid #2a2a2a; transition: all 0.3s ease;
+    .task-item:hover { background: #1a1a1a; transform: translateX(8px); }
+    .task-item h4 { color: #fff; margin-bottom: 8px; font-size: 1.3rem; }
+    .task-item p { color: var(--text-muted); font-size: 1rem; margin-bottom: 4px; }
+    .next-run { color: var(--accent-green); font-weight: 500; }
+    /* Other Projects */
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 40px;
     }
-    .tech-item:hover { background:#4ade80; color:#0f0f0f; transform: translateY(-2px); }
-    .tech-item img { width:20px; height:20px; }
-    /* Philosophy */
-    .philosophy { text-align:center; max-width:800px; margin:0 auto; }
-    .philosophy p { font-size:1.2rem; color:#a0a0a0; margin-bottom:24px; font-weight:300; }
-    /* Bio */
-    .bio { text-align:center; margin-top:60px; }
-    .bio p { font-size:1.1rem; color:#a0a0a0; margin-bottom:16px; }
-    /* Animations */
-    @keyframes fadeInUp { to { opacity:1; transform:translateY(0); } }
+    .project-card {
+      background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
+      transition: all 0.4s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-16px); box-shadow: 0 30px 70px rgba(74,222,128,0.25); border-color: var(--accent-green);
+    }
+    .project-img { width: 100%; height: 260px; object-fit: cover; }
+    .project-body { padding: 32px; }
+    .project-title { font-size: 1.8rem; color: var(--accent-green); margin-bottom: 12px; }
+    .project-desc { color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; }
+    .project-links { display: flex; gap: 12px; }
+    .project-links a {
+      padding: 10px 20px; background: var(--accent-green); color: #000; border-radius: 10px;
+      font-weight: 600; display: flex; align-items: center; gap: 8px;
+    }
+    .project-links a:hover { background: #22c55e; }
+    /* Building */
+    .building {
+      background: var(--bg-secondary); border: 2px dashed var(--border); border-radius: 20px;
+      padding: 48px; text-align: center; max-width: 900px; margin: 100px auto;
+    }
+    .building h3 { color: var(--accent-green); font-size: 2rem; margin-bottom: 24px; }
+    .building ul { text-align: left; display: inline-block; font-size: 1.1rem; color: var(--text-muted); }
+    .building li { margin: 16px 0; }
+    .building li::before { content: "→ "; color: var(--accent-green); font-weight: bold; }
+    /* Contact */
+    .contact {
+      text-align: center; font-size: 1.3rem; color: var(--text-muted);
+    }
+    .contact a { color: var(--accent-green); font-weight: 600; }
+    .social-links { display: flex; gap: 20px; justify-content: center; margin-top: 20px; }
+    .social-links a { font-size: 2rem; transition: all 0.3s ease; }
+    .social-links a:hover { transform: scale(1.1); }
     /* Responsive */
-    @media(max-width:1024px){
-      .dashboard { padding:40px; }
-      .features { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+    @media (max-width: 968px) {
+      .about-grid { grid-template-columns: 1fr; text-align: center; }
+      .about-img { max-width: 300px; }
+      .featured { padding: 40px; }
     }
-    @media(max-width:768px){
-      header h1 { font-size:3rem; }
-      header p { font-size:1.4rem; }
-      .dashboard { padding:30px; margin:40px 0; }
-      section { padding:80px 20px; }
-    }
-    @media(max-width:640px){
-      header h1 { font-size:2.5rem; }
-      .btn { padding:12px 24px; font-size:1rem; margin:8px; }
-      .tech-stack { gap:12px; }
-      .tech-item { padding:10px 16px; font-size:0.9rem; }
+    @media (max-width: 640px) {
+      h1 { font-size: 3.5rem; }
+      h2 { font-size: 2.8rem; }
+      section { padding: 100px 0; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .featured-stats { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-<div class="container">
-  <!-- Hero -->
   <header>
-    <div class="shape shape1"></div>
-    <div class="shape shape2"></div>
-    <div class="shape shape3"></div>
-    <h1>Task Automation Platform</h1>
-    <p class="tagline">No AI. Just code that runs forever.</p>
-    <p>Make your life easier with real automation. Reliable, local task scheduling without subscriptions, tracking, or cloud dependencies.</p>
-    <div>
-      <a href="https://github.com/dillionhuston/Task-Automation-API" class="btn btn-primary" target="_blank">GitHub Repo</a>
-      <a href="mailto:dillonh204@icloud.com" class="btn btn-secondary">Get in Touch</a>
+    <div class="glow-bg">
+      <span></span>
+    </div>
+    <div class="hero-content">
+      <h1>Dillon Huston</h1>
+      <p class="subtitle">18 y/o Backend Engineer • No AI. Just code that runs forever.</p>
+      <div>
+        <a href="#projects" class="btn btn-primary">See My Work</a>
+        <a href="mailto:dillonh204@icloud.com" class="btn btn-outline">Get In Touch</a>
+      </div>
     </div>
   </header>
-  
-  <!-- Features -->
-  <section id="features">
-    <h2>Why This Platform?</h2>
-    <div class="features">
-      <div class="feature-card">
-        <div class="feature-icon">∞</div>
-        <h3>Unlimited Tasks</h3>
-        <p>Create as many automated tasks as you need. No artificial limits or paywalls.</p>
+
+  <div class="container">
+    <!-- About -->
+    <section id="about">
+      <h2>About Me</h2>
+      <div class="about-grid">
+        <img src="https://avatars.githubusercontent.com/u/122535848?v=4" alt="Dillon Huston" class="about-img" />
+        <div>
+          <div class="bio-text">
+            <p>I'm a dedicated software developer with expertise in Python, networking, and web development. My passion lies in tackling complex challenges, building impactful solutions, and continuously expanding my knowledge. I thrive on creating efficient, user-focused applications and am always eager to learn new technologies.</p>
+            <p>Self-taught from the UK, I build production-grade APIs, automation platforms, and privacy-focused tools that people actually use. Obsessed with async systems, task queues, and Docker deployments.</p>
+          </div>
+          <div class="skills">
+            <div class="skill"><i class="fab fa-python"></i> Python</div>
+            <div class="skill"><i class="fas fa-bolt"></i> FastAPI</div>
+            <div class="skill"><i class="fas fa-tasks"></i> Celery</div>
+            <div class="skill"><i class="fab fa-docker"></i> Docker</div>
+            <div class="skill"><i class="fab fa-redis"></i> Redis</div>
+            <div class="skill"><i class="fas fa-database"></i> SQLAlchemy</div>
+            <div class="skill"><i class="fab fa-flutter"></i> Flutter</div>
+            <div class="skill"><i class="fab fa-git-alt"></i> Git</div>
+          </div>
+        </div>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">⚡</div>
-        <h3>Sub-second Latency</h3>
-        <p>Tasks execute with less than 1-second delay for seamless, responsive automation.</p>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+      <h2>Projects</h2>
+
+      <!-- Featured: Task Automation -->
+      <div class="featured">
+        <h3>Task Automation Platform</h3>
+        <p style="text-align:center; color:var(--text-muted); margin-bottom:30px; font-size:1.1rem;">
+          Full local version on GitHub runs with Docker, Celery, Redis and FastAPI. Email reminders, file cleanup, system tasks and way more features coming every week.
+        </p>
+        <div class="featured-stats">
+          <div class="stat">
+            <div class="stat-icon">∞</div>
+            <div class="stat-value">Unlimited Tasks</div>
+            <div class="stat-label">Create as many as you need</div>
+          </div>
+          <div class="stat">
+            <div class="stat-icon">⚡</div>
+            <div class="stat-value">&lt; 1s Latency</div>
+            <div class="stat-label">Sub-second execution</div>
+          </div>
+          <div class="stat">
+            <div class="stat-icon">🏠</div>
+            <div class="stat-value">100% Local</div>
+            <div class="stat-label">Your data stays yours</div>
+          </div>
+        </div>
+        <p style="text-align:center; color:var(--text-muted); margin:30px 0;">TASK DASHBOARD: Your automation. Always running. No mockups. This is real code from your actual app.</p>
+        <ul class="task-list">
+          <li class="task-item">
+            <h4>Deploy new backend</h4>
+            <p><strong>Scheduled:</strong> Push FastAPI update to Railway</p>
+            <p><strong>Next Run:</strong> <span class="next-run">Dec 1, 2025 • 2:00 PM</span></p>
+          </li>
+          <li class="task-item">
+            <h4>Pay hosting bill</h4>
+            <p><strong>Recurring:</strong> Railway + domain renewal, Monthly on 28th</p>
+            <p><strong>Next Run:</strong> <span class="next-run">Nov 28, 2025 • 9:00 AM</span></p>
+          </li>
+          <li class="task-item">
+            <h4>Call mom</h4>
+            <p><strong>Recurring:</strong> Weekly, Sunday family check-in, Every Sunday 7:00 PM</p>
+            <p><strong>Next Run:</strong> <span class="next-run">Nov 30, 2025 • 7:00 PM</span></p>
+          </li>
+        </ul>
+        <div style="margin-top:30px;">
+          <a href="https://github.com/dillionhuston/Task-Automation-API" class="btn btn-primary" target="_blank">GitHub Repo</a>
+          <a href="https://dillonhtask.netlify.app/" class="btn btn-primary" target="_blank">Live Demo</a>
+        </div>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">🏠</div>
-        <h3>100% Local Execution</h3>
-        <p>Everything runs on your machine. Full privacy, no data leaves your control.</p>
+
+      <!-- Other Projects -->
+      <div class="projects-grid">
+        <div class="project-card">
+          <img src="https://github.com/dillionhuston/Shadow/blob/main/demo.gif?raw=true" alt="ShadowBox" class="project-img" />
+          <div class="project-body">
+            <h3 class="project-title">Secure File Storage App (ShadowBox)</h3>
+            <p class="project-desc">A robust Flutter and Flask application enabling secure file uploads and downloads with JWT-based authentication and end-to-end encryption. Privacy-first cloud storage with cross-device sync.</p>
+            <div class="project-links">
+              <a href="https://github.com/dillionhuston/Shadow" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img src="hash.png" alt="SHA-256 Hasher" class="project-img" />
+          <div class="project-body">
+            <h3 class="project-title">SHA-256 File Hasher</h3>
+            <p class="project-desc">Lightning-fast duplicate finder with CLI & GUI. Uses SHA-256 hashing for 100% accuracy. Supports multiple file types and quick scans.</p>
+            <div class="project-links">
+              <a href="https://github.com/dillionhuston/SHA-256-File-Hasher" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img src="iptv.png" alt="IPTV Scanner" class="project-img" />
+          <div class="project-body">
+            <h3 class="project-title">IPTV Scanner</h3>
+            <p class="project-desc">Scans thousands of IPTV streams, removes dead links, exports clean M3U playlists. Keeps your lists organized and up-to-date.</p>
+            <div class="project-links">
+              <a href="https://github.com/dillionhuston/IPTV-Scanner-Beta" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img src="https://github.com/dillionhuston/Algorithm-Sandbox/raw/main/leet.png" alt="Algorithm Solutions" class="project-img" style="background:#2a2a2a;" />
+          <div class="project-body">
+            <h3 class="project-title">Algorithm Solutions</h3>
+            <p class="project-desc">A comprehensive collection of solved LeetCode problems with detailed explanations and optimized code in multiple languages.</p>
+            <div class="project-links">
+              <a href="https://github.com/dillionhuston/Algorithm-Sandbox" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img src="portfolio.png" alt="Portfolio Website" class="project-img" style="background:#2a2a2a;" />
+          <div class="project-body">
+            <h3 class="project-title">Portfolio Website</h3>
+            <p class="project-desc">A modern, responsive portfolio site built with HTML, CSS, and JavaScript, hosted on GitHub Pages to showcase my work.</p>
+            <div class="project-links">
+              <a href="https://github.com/dillionhuston/dillionhuston.github.io" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Dashboard Demo -->
-  <section id="dashboard">
-    <div class="dashboard">
-      <h3>Live Task Dashboard</h3>
-      <p style="text-align:center; color:#a0a0a0; margin-bottom:30px;">No mockups. These are real tasks from the actual app.</p>
-      <ul class="task-list">
-        <li class="task-item">
-          <h4>Deploy new backend</h4>
-          <p><strong>Scheduled:</strong> Push FastAPI update to Railway</p>
-          <p><strong>Next Run:</strong> <span class="next-run">Dec 1, 2025 • 2:00 PM</span></p>
-        </li>
-        <li class="task-item">
-          <h4>Pay hosting bill</h4>
-          <p><strong>Recurring:</strong> Monthly on the 28th</p>
-          <p><strong>Next Run:</strong> <span class="next-run">Dec 28, 2025 • 9:00 AM</span></p>
-        </li>
-        <li class="task-item">
-          <h4>Call mom</h4>
-          <p><strong>Recurring:</strong> Every Sunday at 7:00 PM</p>
-          <p><strong>Next Run:</strong> <span class="next-run">Nov 30, 2025 • 7:00 PM</span></p>
-        </li>
-      </ul>
-    </div>
-  </section>
+    <!-- Currently Building -->
+    <section>
+      <div class="building">
+        <h3>Currently Building</h3>
+        <ul>
+          <li>Network-wide automation orchestrator (FastAPI + Celery + WebSockets)</li>
+          <li>Zero-trust encrypted file sync (Python + Rust)</li>
+          <li>Predictive task scheduler with ML load balancing</li>
+        </ul>
+      </div>
+    </section>
 
-  <!-- Tech Stack -->
-  <section id="tech">
-    <h2>Built With</h2>
-    <div class="tech-stack">
-      <div class="tech-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/fastapi.svg" alt="FastAPI" /> FastAPI</div>
-      <div class="tech-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/celery.svg" alt="Celery" /> Celery + Redis</div>
-      <div class="tech-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/docker.svg" alt="Docker" /> Docker</div>
-      <div class="tech-item">Email Reminders</div>
-      <div class="tech-item">File Cleanup</div>
-      <div class="tech-item">JWT Auth</div>
-      <div class="tech-item">Swagger UI</div>
-    </div>
-  </section>
+    <!-- Contact -->
+    <section id="contact" class="contact">
+      <h2>Get In Touch</h2>
+      <p>I'm always open to new opportunities and collaborations. Reach out via email or connect with me on social platforms!</p>
+      <p>Email: <a href="mailto:dillonh204@icloud.com">dillonh204@icloud.com</a></p>
+      <div class="social-links">
+        <a href="https://github.com/dillionhuston" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/dillon-huston/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="https://instagram.com/dillonhuston26" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+      <p style="margin-top:32px; font-size:1.5rem;"><strong>Open to freelance, internships, and full-time backend roles.</strong></p>
+    </section>
+  </div>
 
-  <!-- Philosophy -->
-  <section id="philosophy">
-    <h2>Our Philosophy</h2>
-    <div class="philosophy">
-      <p>Automation should be simple, secure, and yours. We focus on tools that solve real problems with clean code and async systems. Open-source freedom means you own your setup—no lock-in, no fees.</p>
-      <p>Supports scheduled, one-time, and recurring tasks. Integrates system-level automation, email notifications, and automatic file management. Deploy with one command and scale locally.</p>
-    </div>
-  </section>
+  <script>
+    // Intersection Observer for fade-ins
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
 
-  <!-- Bio -->
-  <section id="bio" class="bio">
-    <h2>Dillion Huston</h2>
-    <p>Backend Engineer. Network Engineer. Builds Every Day.</p>
-    <p>Self-taught developer passionate about scalable APIs and privacy-focused tools. New features added weekly.</p>
-    <div style="margin-top:40px;">
-      <a href="https://github.com/dillionhuston" class="btn btn-primary" target="_blank">GitHub</a>
-      <a href="mailto:dillonh204@icloud.com" class="btn btn-secondary">Hire Me</a>
-    </div>
-  </section>
-</div>
-
-<script>
-  // Enhanced Scroll Animations
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = 1;
-        entry.target.style.transform = 'translateY(0)';
-      }
+    document.querySelectorAll('section > *:not(.glow-bg)').forEach(el => {
+      el.style.opacity = 0;
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'all 0.9s ease-out';
+      observer.observe(el);
     });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('h2, .feature-card, .dashboard, .tech-stack, .philosophy p').forEach(el => {
-    observer.observe(el);
-  });
 
-  // Smooth scrolling for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
     });
-  });
-</script>
+
+    // Accessibility for projects
+    document.querySelectorAll('.project-card, .task-item').forEach(el => {
+      el.addEventListener('focus', () => el.classList.add('active'));
+      el.addEventListener('blur', () => el.classList.remove('active'));
+    });
+  </script>
 </body>
 </html>
