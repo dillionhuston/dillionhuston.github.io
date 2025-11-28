@@ -17,16 +17,15 @@
       --purple: #9d4edd;
       --gray: #888;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
       font-family: 'Inter', sans-serif;
       background: var(--bg);
       color: var(--text);
       overflow-x: hidden;
-      cursor: default;
+      min-height: 100vh;
     }
-    /* Animated Particle Background */
-    #particles {
+    canvas#particles {
       position: fixed;
       inset: 0;
       z-index: -1;
@@ -37,7 +36,6 @@
       place-items: center;
       text-align: center;
       padding: 0 20px;
-      position: relative;
     }
     .hero h1 {
       font-family: 'JetBrains Mono', monospace;
@@ -52,7 +50,7 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 1.6rem;
       color: var(--green);
-      border-right: 3px solid var(--green) solid;
+      border-right: 3px solid var(--green);
       white-space: nowrap;
       overflow: hidden;
       width: 0;
@@ -60,6 +58,7 @@
     }
     @keyframes typing { from { width: 0 } to { width: 36ch } }
     @keyframes blink { 50% { border-color: transparent } }
+
     .btn {
       padding: 14px 32px;
       margin: 12px;
@@ -75,6 +74,13 @@
       box-shadow: 0 0 30px rgba(57,255,132,0.4);
     }
     .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(57,255,132,0.6); }
+    .btn-outline {
+      border: 2px solid var(--green);
+      color: var(--green);
+      background: transparent;
+    }
+    .btn-outline:hover { background: var(--green); color: #000; }
+
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
     section { padding: 120px 0; }
     h2 {
@@ -85,7 +91,8 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    /* Projects */
+
+    /* Filters */
     .filters {
       text-align: center;
       margin-bottom: 50px;
@@ -99,11 +106,14 @@
       border-radius: 50px;
       cursor: pointer;
       transition: all 0.3s;
+      font-weight: 600;
     }
     .filter-btn.active, .filter-btn:hover {
       background: var(--green);
       color: #000;
     }
+
+    /* Projects Grid */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
@@ -117,207 +127,240 @@
       opacity: 0;
       transform: translateY(40px);
     }
-    .project.visible {
-      opacity: 1;
-      transform: translateY(0);
-      transition: all 0.6s ease-out;
-    }
+    .project.visible { opacity: 1; transform: translateY(0); transition: all 0.6s ease-out; }
     .project:hover {
       transform: translateY(-12px);
       box-shadow: 0 20px 40px rgba(57,255,132,0.3);
     }
+    .project.featured {
+      grid-column: 1 / -1;
+      max-width: 900px;
+      margin: 0 auto;
+    }
     .project img {
       width: 100%;
-      height: 220px;
+      height: 240px;
       object-fit: cover;
-      background: var(--card);
+      background: #1a1a1a;
+      opacity: 0;
+      transition: opacity 0.4s ease;
     }
+    .project img.loaded { opacity: 1; }
+
     .project-info {
-      padding: 24px;
+      padding: 28px;
     }
     .project-info h3 {
       color: var(--green);
       margin-bottom: 12px;
-      font-size: 1.6rem;
+      font-size: 1.8rem;
     }
     .project-info p {
-      color: #aaa;
+      color: #ccc;
       margin-bottom: 20px;
-      line-height: 1.6;
+      line-height: 1.7;
     }
     .tech-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 16px;
+      gap: 10px;
+      margin: 20px 0;
     }
     .tag {
-      background: rgba(57,255,132,0.1);
+      background: rgba(57,255,132,0.12);
       color: var(--green);
-      padding: 6px 12px;
+      padding: 8px 14px;
       border-radius: 8px;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       font-weight: 500;
     }
-    /* Live GitHub Stats */
+
+    /* Stats */
     .stats {
       display: flex;
       justify-content: center;
       gap: 40px;
       flex-wrap: wrap;
-      margin: 60px 0;
+      margin: 80px 0;
     }
     .stat-card {
       text-align: center;
-      padding: 20px;
+      padding: 28px;
       background: var(--card);
       border-radius: 16px;
-      min-width: 180px;
+      min-width: 200px;
+      border: 1px solid rgba(57,255,132,0.15);
     }
     .stat-card h3 {
-      font-size: 2.8rem;
+      font-size: 3rem;
       color: var(--green);
+      margin-bottom: 8px;
     }
-    .loading { color: var(--gray); }
+
     /* Contact */
     .contact {
       text-align: center;
-      padding: 100px 0;
+      padding: 120px 0;
     }
     .contact a {
       color: var(--green);
       font-weight: 600;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
     }
+
     footer {
       text-align: center;
-      padding: 40px;
+      padding: 50px;
       color: var(--gray);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
+      border-top: 1px solid #222;
     }
-    /* Image loading */
-    img { opacity: 0; transition: opacity 0.3s ease; }
-    img.loaded { opacity: 1; }
+
+    @media (max-width: 768px) {
+      .filters { margin-bottom: 40px; }
+      .filter-btn { padding: 8px 16px; margin: 4px; font-size: 0.9rem; }
+      section { padding: 80px 0; }
+      h2 { font-size: 2.8rem; }
+    }
   </style>
 </head>
 <body>
+
   <canvas id="particles"></canvas>
+
   <header>
     <div class="hero">
       <h1>Dillon Huston</h1>
       <div class="typing">Building production backends with pure Python</div>
-      <p style="margin: 30px 0; font-size:1.3rem; color:#aaa;">
+      <p style="margin:30px 0; font-size:1.3rem; color:#aaa;">
         18 y/o • UK • FastAPI + Celery + Docker • Shipping real tools daily
       </p>
       <div>
         <a href="#projects" class="btn btn-primary">See Projects</a>
-        <a href="mailto:dillonh204@icloud.com" class="btn" style="border:2px solid var(--green);color:var(--green);">Email Me</a>
+        <a href="mailto:dillonh204@icloud.com" class="btn btn-outline">Email Me</a>
       </div>
     </div>
   </header>
+
   <div class="container">
+
     <section id="projects">
       <h2>Projects</h2>
+
       <div class="filters">
         <button class="filter-btn active" data-filter="all">All</button>
         <button class="filter-btn" data-filter="python">Python</button>
         <button class="filter-btn" data-filter="automation">Automation</button>
         <button class="filter-btn" data-filter="privacy">Privacy</button>
       </div>
+
       <div class="projects-grid">
-        <!-- Task Automation - Main Project -->
-        <div class="project visible" data-tags="python automation" style="grid-column: 1 / -1; max-width: 800px; margin: 0 auto;">
-          <img src="https://dillonhtask.netlify.app/tasks.png" alt="Task Automation Dashboard" loading="lazy" onerror="this.src='https://via.placeholder.com/800x220/121212/39ff84?text=TASK+AUTOMATION'" />
+
+        <!-- Featured: Task Automation Platform -->
+        <div class="project featured visible" data-tags="python automation">
+          <img src="https://dillonhtask.netlify.app/tasks.png" alt="Task Automation Platform Dashboard" loading="lazy"/>
           <div class="project-info">
             <h3>Task Automation Platform</h3>
-            <p>A task automation platform that runs locally with no subscriptions or limits. Production-grade async scheduler with JWT auth, Celery + Redis for reliable scheduling, email reminders, file cleanup, system tasks, and a web dashboard for managing scheduled, one-time, and recurring tasks. 100% local execution—no cloud, no tracking. Deploy anywhere with Docker.</p>
+            <p>Production-grade local task scheduler. Unlimited tasks, sub-second execution, email reminders, file cleanup, recurring schedules — all 100% local. Built with FastAPI, Celery + Redis backend, JWT auth, and Docker-first deployment. No cloud. No tracking. Just code that runs forever.</p>
             <div class="tech-tags">
               <span class="tag">FastAPI</span>
               <span class="tag">Celery</span>
               <span class="tag">Redis</span>
               <span class="tag">Docker</span>
               <span class="tag">JWT Auth</span>
-              <span class="tag">Email Reminders</span>
+              <span class="tag">Email + File Tasks</span>
             </div>
-            <div style="margin-top:20px;">
-              <a href="https://github.com/dillionhuston/Task-Automation-API" target="_blank" class="btn btn-primary" style="font-size:0.9rem;padding:10px 20px;">GitHub</a>
-              <a href="https://dillonhtask.netlify.app" target="_blank" class="btn" style="border:2px solid var(--green);color:var(--green);font-size:0.9rem;padding:10px 20px;">Live Demo</a>
+            <div>
+              <a href="https://github.com/dillionhuston/Task-Automation-API" target="_blank" class="btn btn-primary">GitHub</a>
+              <a href="https://dillonhtask.netlify.app" target="_blank" class="btn btn-outline">Live Demo</a>
             </div>
           </div>
         </div>
+
         <!-- ShadowBox -->
         <div class="project" data-tags="python privacy flutter">
-          <img src="https://github.com/dillionhuston/Shadow/raw/main/demo.gif" alt="ShadowBox" loading="lazy" onerror="this.src='https://via.placeholder.com/600x220/121212/39ff84?text=SHADOWBOX'" />
+          <img src="https://github.com/dillionhuston/Shadow/raw/main/demo.gif" alt="ShadowBox Encrypted Sync" loading="lazy"/>
           <div class="project-info">
             <h3>ShadowBox</h3>
-            <p>End-to-end encrypted file sync • Flutter + Python • Zero-knowledge privacy-first cloud storage with cross-device sync.</p>
+            <p>End-to-end encrypted file storage & sync. Flutter frontend + Python/FastAPI backend. True zero-knowledge privacy — no third-party servers, no data access.</p>
             <div class="tech-tags">
               <span class="tag">Flutter</span>
               <span class="tag">FastAPI</span>
-              <span class="tag">E2E Encryption</span>
+              <span class="tag">E2EE</span>
             </div>
-            <a href="https://github.com/dillionhuston/Shadow" target="_blank" class="btn btn-primary" style="margin-top:16px;display:inline-block;padding:10px 20px;font-size:0.9rem;">GitHub</a>
+            <a href="https://github.com/dillionhuston/Shadow" target="_blank" class="btn btn-primary">GitHub</a>
           </div>
         </div>
-        <!-- SHA Hasher -->
+
+        <!-- SHA-256 Hasher -->
         <div class="project" data-tags="python">
-          <img src="https://raw.githubusercontent.com/dillionhuston/SHA-256-File-Hasher/main/screenshot.png" alt="Hasher" loading="lazy" onerror="this.src='https://via.placeholder.com/600x220/121212/39ff84?text=SHA256+HASHER'" />
+          <img src="https://raw.githubusercontent.com/dillionhuston/SHA-256-File-Hasher/main/screenshot.png" alt="SHA-256 File Hasher" loading="lazy"/>
           <div class="project-info">
             <h3>SHA-256 File Hasher</h3>
-            <p>Ultra-fast duplicate finder • CLI + GUI • Pure Python for quick scans across multiple file types.</p>
-            <div class="tech-tags"><span class="tag">Python</span><span class="tag">Tkinter</span></div>
-            <a href="https://github.com/dillionhuston/SHA-256-File-Hasher" target="_blank" class="btn btn-primary" style="margin-top:16px;display:inline-block;padding:10px 20px;font-size:0.9rem;">GitHub</a>
+            <p>Lightning-fast duplicate finder with CLI & GUI. 100% accurate hashing using SHA-256 algorithm.</p>
+            <div class="tech-tags">
+              <span class="tag">Python</span>
+              <span class="tag">Tkinter</spanscore>
+            </div>
+            <a href="https://github.com/dillionhuston/SHA-256-File-Hasher" target="_blank" class="btn btn-primary">GitHub</a>
           </div>
         </div>
+
         <!-- IPTV Scanner -->
         <div class="project" data-tags="python automation">
-          <img src="https://raw.githubusercontent.com/dillionhuston/IPTV-Scanner-Beta/main/screenshot.png" alt="IPTV" loading="lazy" onerror="this.src='https://via.placeholder.com/600x220/121212/39ff84?text=IPTV+SCANNER'" />
+          <img src="https://raw.githubusercontent.com/dillionhuston/IPTV-Scanner-Beta/main/screenshot.png" alt="IPTV Scanner" loading="lazy"/>
           <div class="project-info">
             <h3>IPTV Stream Cleaner</h3>
-            <p>Scans 10k+ streams • Removes dead links • Exports clean M3U playlists for organized access.</p>
-            <div class="tech-tags"><span class="tag">Python</span><span class="tag">Asyncio</span></div>
-            <a href="https://github.com/dillionhuston/IPTV-Scanner-Beta" target="_blank" class="btn btn-primary" style="margin-top:16px;display:inline-block;padding:10px 20px;font-size:0.9rem;">GitHub</a>
+            <p>Scans thousands of IPTV streams, removes dead links, exports clean M3U playlists. Async-powered for speed.</p>
+            <div class="tech-tags">
+              <span class="tag">Python</span>
+              <span class="tag">Asyncio</span>
+            </div>
+            <a href="https://github.com/dillionhuston/IPTV-Scanner-Beta" target="_blank" class="btn btn-primary">GitHub</a>
           </div>
         </div>
+
       </div>
     </section>
+
     <!-- Live Stats -->
     <section>
       <div class="stats">
         <div class="stat-card">
-          <h3 id="repos">Loading...</h3>
-          <p>GitHub Repos</p>
+          <h3 id="repos">—</h3>
+          <p>Public Repos</p>
         </div>
         <div class="stat-card">
-          <h3 id="additions">Loading...</h3>
-          <p>Lines Shipped This Month</p>
+          <h3 id="lines">—</h3>
+          <p>Lines Added (30d)</p>
         </div>
         <div class="stat-card">
           <h3>0</h3>
-          <p>Lines of JavaScript in Backend</p>
+          <p>JS in Backend</p>
         </div>
       </div>
     </section>
+
     <!-- Contact -->
     <section class="contact" id="contact">
       <h2>Let's Build Something</h2>
       <p style="font-size:1.4rem;margin:30px 0;">
-        <a href="mailto:dillonh204@icloud.com">dillonh204@icloud.com</a> • Open to work
+        <a href="mailto:dillonh204@icloud.com">dillonh204@icloud.com</a>
       </p>
-      <p>Freelance • Internships • Full-time Backend Roles</p>
+      <p>Open to freelance • internships • full-time backend roles</p>
     </section>
+
   </div>
+
   <footer>
     © 2025 Dillon Huston • Built with pure Python & caffeine
   </footer>
+
   <script>
-    // Image loading to prevent flicker
+    // Smooth image loading
     document.querySelectorAll('img').forEach(img => {
-      if (img.complete) {
-        img.classList.add('loaded');
-      } else {
-        img.addEventListener('load', () => img.classList.add('loaded'));
-      }
+      img.onload = () => img.classList.add('loaded');
+      if (img.complete) img.classList.add('loaded');
     });
 
     // Particle background
@@ -325,23 +368,23 @@
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
     let particles = [];
-    const mouse = { x: 0, y: 0 };
     class Particle {
-      constructor(){
+      constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
         this.size = Math.random() * 3 + 1;
         this.speedX = Math.random() * 1 - 0.5;
         this.speedY = Math.random() * 1 - 0.5;
       }
-      update(){
+      update() {
         this.x += this.speedX;
         this.y += this.speedY;
         if (this.size > 0.2) this.size -= 0.01;
       }
-      draw(){
-        ctx.fillStyle = 'rgba(57,255,132,0.8)';
+      draw() {
+        ctx.fillStyle = 'rgba(57,255,132,0.7)';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -349,18 +392,14 @@
     }
     function init() {
       particles = [];
-      for(let i = 0; i < 100; i++) {
-        particles.push(new Particle());
-      }
+      for (let i = 0; i < 120; i++) particles.push(new Particle());
     }
     function animate() {
       ctx.clearRect(0,0,canvas.width,canvas.height);
       particles.forEach((p, i) => {
         p.update();
         p.draw();
-        if(p.size <= 0.2){
-          particles[i] = new Particle();
-        }
+        if (p.size <= 0.2) particles[i] = new Particle();
       });
       requestAnimationFrame(animate);
     }
@@ -372,65 +411,54 @@
       init();
     });
 
-    // Filter projects
+    // Project filtering
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelector('.filter-btn.active').classList.remove('active');
         btn.classList.add('active');
         const filter = btn.dataset.filter;
-        document.querySelectorAll('.project').forEach(proj => {
-          if (filter === 'all' || proj.dataset.tags.includes(filter)) {
-            proj.classList.add('visible');
+        document.querySelectorAll('.project').forEach(p => {
+          if (filter === 'all' || p.dataset.tags.includes(filter)) {
+            p.classList.add('visible');
           } else {
-            proj.classList.remove('visible');
+            p.classList.remove('visible');
           }
         });
       });
     });
 
-    // Trigger animations on scroll
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
+    // Scroll animations
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.project').forEach(p => observer.observe(p));
 
-    // Fetch and update GitHub stats
-    async function updateStats() {
+    // Live GitHub Stats (rate-limit safe)
+    async function loadStats() {
       try {
-        // Get public repos count
-        const userRes = await fetch('https://api.github.com/users/dillionhuston');
-        const userData = await userRes.json();
-        document.getElementById('repos').textContent = userData.public_repos || 0;
-        document.getElementById('repos').classList.remove('loading');
-
-        // Get additions for current month (approximate: last 30 days for "this month")
-        const now = new Date();
-        const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-        const since = oneMonthAgo.toISOString().split('T')[0];
-        const eventsRes = await fetch(`https://api.github.com/users/dillionhuston/events?per_page=100`);
+        const [userRes, eventsRes] = await Promise.all([
+          fetch('https://api.github.com/users/dillionhuston'),
+          fetch('https://api.github.com/users/dillionhuston/events?per_page=100')
+        ]);
+        const user = await userRes.json();
         const events = await eventsRes.json();
-        let totalAdditions = 0;
-        events.forEach(event => {
-          if (event.type === 'PushEvent' && new Date(event.created_at) > oneMonthAgo) {
-            event.payload.commits.forEach(commit => {
-              totalAdditions += commit.additions || 0;
-            });
+
+        document.getElementById('repos').textContent = user.public_repos || 0;
+
+        const oneMonthAgo = Date.now() - 30*24*60*60*1000;
+        let additions = 0;
+        events.forEach(e => {
+          if (e.type === 'PushEvent' && new Date(e.created_at) > oneMonthAgo) {
+            e.payload.commits?.forEach(c => additions += (c.additions || 0));
           }
         });
-        document.getElementById('additions').textContent = totalAdditions.toLocaleString() || '0';
-        document.getElementById('additions').classList.remove('loading');
-      } catch (error) {
-        console.error('Error fetching GitHub stats:', error);
-        document.getElementById('repos').textContent = 'N/A';
-        document.getElementById('additions').textContent = 'N/A';
+        document.getElementById('lines').textContent = additions > 0 ? additions.toLocaleString() : '—';
+      } catch (err) {
+        console.log('GitHub stats failed (rate limit?)', err);
       }
     }
-    updateStats();
-
-    // Refresh stats every 5 minutes (300000 ms)
-    setInterval(updateStats, 300000);
+    loadStats();
+    setInterval(loadStats, 5 * 60 * 1000); // refresh every 5 mins
   </script>
 </body>
 </html>
