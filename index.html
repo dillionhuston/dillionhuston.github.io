@@ -14,153 +14,220 @@
       --border: #1a1a1a;
       --text: #e0e0e0;
       --muted: #888;
-      --green: #39,255,132;
-      --green-glow: rgba(39,255,132,0.3);
+      --green: #39ff84;
+      --green-glow: rgba(57, 255, 132, 0.35);
     }
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
       font-family: 'Inter', sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
+      overflow-x: hidden;
     }
+
+    /* Animated background glow like your app */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 20% 80%, var(--green-glow) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(100,100,255,0.08) 0%, transparent 50%);
+      pointer-events: none;
+      animation: pulse 20s infinite alternate;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
     .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
-    /* Hero — exactly like your app */
     header {
       min-height: 100vh;
       display: grid;
       place-items: center;
       text-align: center;
-      background: 
-        radial-gradient(circle at 20% 80%, rgba(var(--green),0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(100,100,255,0.08) 0%, transparent 50%);
     }
+
     .hero h1 {
       font-family: 'JetBrains Mono', monospace;
-      font-size: clamp(4rem, 10vw, 7rem);
+      font-size: clamp(4.5rem, 11vw, 8rem);
       font-weight: 700;
       background: linear-gradient(90deg, #39ff84, #39ff84);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      letter-spacing: -2px;
-    }
-    .hero .tagline {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.5rem;
-      color: #39ff84;
-      margin: 20px 0 40px;
-      opacity: 0.9;
-    }
-    .hero p {
-      font-size: 1.3rem;
-      color: var(--muted);
-      max-width: 600px;
-      margin: 0 auto 40px;
-    }
-    .btn {
-      padding: 16px 36px;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 1.1rem;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.3s ease;
-    }
-    .btn-primary {
-      background: #39ff84;
-      color: #000;
-      box-shadow: 0 0 40px var(--green-glow);
-    }
-    .btn-primary:hover { transform: transform: translateY(-4px); box-shadow: 0 0 60px var(--green-glow); }
-    .btn-outline {
-      border: 2px solid #39ff84;
-      color: #39ff84;
-      background: transparent;
-    }
-    .btn-outline:hover {
-      background: #39ff84;
-      color: #000;
+      letter-spacing: -3px;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeUp 1.2s 0.4s forwards;
     }
 
-    section { padding: 140px 0; }
+    .hero .tagline {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.7rem;
+      color: var(--green);
+      margin: 24px 0 20px;
+      opacity: 0;
+      animation: fadeUp 1.2s 0.8s forwards;
+      text-shadow: 0 0 30px var(--green-glow);
+    }
+
+    .hero p {
+      font-size: 1.35rem;
+      color: var(--muted);
+      max-width: 640px;
+      margin: 0 auto 50px;
+      opacity: 0;
+      animation: fadeUp 1.2s 1s forwards;
+    }
+
+    .btn {
+      padding: 18px 40px;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 1.15rem;
+      text-decoration: none;
+      display: inline-block;
+      opacity: 0;
+      animation: fadeUp 1.2s 1.3s forwards;
+      transition: all 0.4s ease;
+    }
+    .btn-primary {
+      background: var(--green);
+      color: #000;
+      box-shadow: 0 0 50px var(--green-glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 80px var(--green-glow);
+    }
+    .btn-outline {
+      border: 2px solid var(--green);
+      color: var(--green);
+      background: transparent;
+      margin-left: 20px;
+    }
+    .btn-outline:hover {
+      background: var(--green);
+      color: #000;
+      transform: translateY(-6px);
+    }
+
+    section { padding: 160px 0; }
+
     h2 {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 3.5rem;
+      font-size: 3.8rem;
       text-align: center;
-      margin-bottom: 80px;
-      color: #39ff84;
+      color: var(--green);
+      margin-bottom: 100px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1s forwards;
       position: relative;
     }
     h2::after {
       content: '';
       position: absolute;
-      bottom: -16px;
+      bottom: -20px;
       left: 50%;
       transform: translateX(-50%);
-      width: 100px;
-      height: 4px;
-      background: #39ff84;
-      border-radius: 2px;
+      width: 120px;
+      height: 5px;
+      background: var(--green);
+      border-radius: 3px;
+      box-shadow: 0 0 20px var(--green-glow);
     }
 
-    /* Featured Project — identical style to your app */
+    /* Fade-up animation */
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Featured Project — exact clone of your app */
     .featured {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 60px;
+      border-radius: 24px;
+      padding: 70px 50px;
       text-align: center;
-      max-width: 900px;
-      margin: 0 auto 100px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      max-width: 960px;
+      margin: 0 auto 120px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+      opacity: 0;
+      transform: translateY(60px);
+      animation: fadeUp 1.2s 0.3s forwards;
     }
     .featured h3 {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 2.8rem;
-      color: #39ff84;
-      margin-bottom: 24px;
+      font-size: 3rem;
+      color: var(--green);
+      margin-bottom: 28px;
+      text-shadow: 0 0 40px var(--green-glow);
     }
     .featured p {
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       color: var(--muted);
-      max-width: 700px;
-      margin: 0 auto 40px;
+      max-width: 760px;
+      margin: 0 auto 50px;
+      line-height: 1.8;
     }
+
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 30px;
-      margin: 50px 0;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 32px;
+      margin: 60px 0;
     }
     .stat {
-      padding: 20px;
-      background: #111;
-      border-radius: 12px;
+      padding: 32px 20px;
+      background: #111111;
+      border-radius: 16px;
       border: 1px solid #222;
+      transition: all 0.4s;
     }
-    .stat-icon { font-size: 2.5rem; margin-bottom: 12px; }
-    .stat-value { font-size: 2rem; color: #39ff84; font-weight: 700; }
-    .stat-label { color: var(--muted); font-size: 0.95rem; }
+    .stat:hover {
+      transform: translateY(-10px);
+      border-color: var(--green);
+      box-shadow: 0 20px 40px rgba(57,255,132,0.2);
+    }
+    .stat-value {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--green);
+      margin: 12px 0;
+      text-shadow: 0 0 30px var(--green-glow);
+    }
+    .stat-label { color: var(--muted); font-size: 1rem; }
 
     .task-list {
-      margin-top: 50px;
-      text-align: left;
-      max-width: 700px;
+      margin-top: 60px;
+      max-width: 760px;
       margin-left: auto;
       margin-right: auto;
     }
     .task-item {
-      background: #111;
-      border-left: 4px solid #39ff84;
-      padding: 24px;
-      border-radius: 0 12px 12px 0;
-      margin-bottom: 20px;
+      background: #111111;
+      border-left: 5px solid var(--green);
+      padding: 28px;
+      border-radius: 0 16px 16px 0;
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateX(-50px);
+      animation: slideIn 0.8s forwards;
+      animation-delay: calc(0.2s * var(--i));
     }
-    .task-item h4 { color: #fff; margin-bottom: 8px; }
-    .task-item p { color: var(--muted); font-size: 0.95rem; }
-    .next-run { color: #39ff84; font-weight: 600; }
+    .task-item h4 { color: #fff; margin-bottom: 10px; font-size: 1.3rem; }
+    .task-item p { color: var(--muted); margin: 8px 0; }
+    .next-run { color: var(--green); font-weight: 600; }
+
+    @keyframes slideIn {
+      to { opacity: 1; transform: translateX(0); }
+    }
 
     /* Other Projects */
     .projects-grid {
@@ -171,81 +238,89 @@
     .project-card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 20px;
       overflow: hidden;
-      transition: all 0.4s;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fadeUp 1s forwards;
+      animation-delay: calc(0.15s * var(--i));
+      transition: all 0.5s ease;
     }
     .project-card:hover {
-      transform: translateY(-12px);
-      box-shadow: 0 30px 70px rgba(var(--green),0.25);
-      border-color: #39ff84;
+      transform: translateY(-20px);
+      border-color: var(--green);
+      box-shadow: 0 40px 90px rgba(57,255,132,0.3);
     }
     .project-card img {
       width: 100%;
-      height: 220px;
+      height: 240px;
       object-fit: cover;
+      transition: transform 0.6s ease;
     }
+    .project-card:hover img { transform: scale(1.08); }
     .project-body {
-      padding: 32px;
+      padding: 36px;
     }
     .project-body h4 {
-      color: #39ff84;
-      font-size: 1.7rem;
-      margin-bottom: 12px;
+      color: var(--green);
+      font-size: 1.8rem;
+      margin-bottom: 16px;
     }
-    .project-body p { color: var(--muted); margin-bottom: 20px; }
-
     .tech-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin: 20px 0;
+      gap: 12px;
+      margin: 24px 0;
     }
     .tag {
-      background: rgba(var(--green),0.1);
-      color: #39ff84;
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-size: 0.9rem;
+      background: rgba(57,255,132,0.12);
+      color: var(--green);
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: 0.3s;
     }
+    .tag:hover { background: rgba(57,255,132,0.25); }
 
-    /* Contact */
     .contact {
       text-align: center;
-      padding: 120px 0;
+      padding: 140px 0;
       background: #0c0c0c;
       border-top: 1px solid var(--border);
     }
-    .contact h2 { margin-bottom: 40px; }
+    .contact h2 { margin-bottom: 50px; }
     .contact a {
-      color: #39ff84;
-      font-size: 1.4rem;
+      color: var(--green);
+      font-size: 1.5rem;
       font-weight: 600;
     }
     .social {
-      margin-top: 40px;
+      margin-top: 50px;
       display: flex;
       justify-content: center;
-      gap: 30px;
+      gap: 40px;
     }
     .social a {
-      font-size: 2.2rem;
-      color: #39ff84;
-      transition: transform 0.3s;
+      font-size: 2.6rem;
+      color: var(--green);
+      transition: 0.4s;
     }
-    .social a:hover { transform: scale(1.2); }
+    .social a:hover { transform: translateY(-10px) scale(1.2); }
 
     footer {
       text-align: center;
-      padding: 40px;
-      color: #555;
-      font-size: 0.9rem;
+      padding: 50px;
+      color: #444;
+      font-size: 0.95rem;
     }
 
+    /* Responsive */
     @media (max-width: 768px) {
+      .hero h1 { font-size: 4.5rem; }
+      .featured { padding: 50px 30px; }
       section { padding: 100px 0; }
-      .featured { padding: 40px 20px; }
-      h2 { font-size: 2.8rem; }
+      .stats-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -267,7 +342,6 @@
 
   <div class="container">
 
-    <!-- Featured Project — 1:1 copy of your app's style -->
     <section id="projects">
       <h2>Featured Project</h2>
 
@@ -277,52 +351,37 @@
 
         <div class="stats-grid">
           <div class="stat">
-            <div class="stat-icon">Infinity</div>
             <div class="stat-value">Unlimited</div>
             <div class="stat-label">Tasks</div>
           </div>
           <div class="stat">
-            <div class="stat-icon">Lightning</div>
             <div class="stat-value">&lt;1s</div>
             <div class="stat-label">Execution</div>
           </div>
           <div class="stat">
-            <div class="stat-icon">House</div>
             <div class="stat-value">100%</div>
             <div class="stat-label">Local</div>
           </div>
         </div>
 
-        <p style="color:var(--muted);margin:40px 0 20px;">Real tasks currently running on my machine:</p>
+        <p style="color:var(--muted);margin:60px 0 30px;font-size:1.1rem;">Real tasks currently running on my machine:</p>
         <div class="task-list">
-          <div class="task-item">
-            <h4>Deploy new backend</h4>
-            <p>Push FastAPI update to Railway</p>
-            <p class="next-run">Next run: Dec 1, 2025 • 2:00 PM</p>
-          </div>
-          <div class="task-item">
-            <h4>Pay hosting bill</h4>
-            <p>Monthly recurring — Railway + domain</p>
-            <p class="next-run">Next run: Dec 28, 2025 • 9:00 AM</p>
-          </div>
-          <div class="task-item">
-            <h4>Call mom</h4>
-            <p>Every Sunday at 7 PM</p>
-            <p class="next-run">Next run: Nov 30, 2025 • 7:00 PM</p>
-          </div>
+          <div class="task-item" style="--i:1"><h4>Deploy new backend</h4><p>Push FastAPI update to Railway</p><p class="next-run">Next: Dec 1 • 2:00 PM</p></div>
+          <div class="task-item" style="--i:2"><h4>Pay hosting bill</h4><p>Monthly recurring</p><p class="next-run">Next: Dec 28 • 9:00 AM</p></div>
+          <div class="task-item" style="--i:3"><h4>Call mom</h4><p>Every Sunday at 7 PM</p><p class="next-run">Next: Nov 30 • 7:00 PM</p></div>
         </div>
 
-        <div style="margin-top:40px;">
+        <div style="margin-top:60px;">
           <a href="https://github.com/dillionhuston/Task-Automation-API" target="_blank" class="btn btn-primary">GitHub Repo</a>
           <a href="https://dillonhtask.netlify.app" target="_blank" class="btn btn-outline">Live Demo</a>
         </div>
       </div>
 
-      <h2 style="margin-top:120px;">Other Projects</h2>
+      <h2>Other Projects</h2>
 
       <div class="projects-grid">
-        <div class="project-card">
-          <img src="https://github.com/dillionhuston/Shadow/raw/main/demo.gif" alt="ShadowBox">
+        <div class="project-card" style="--i:1">
+          <img src="https://github.com/dillionhuston/Shadow/raw/main/demo.gif" alt="ShadowBox" loading="lazy">
           <div class="project-body">
             <h4>ShadowBox</h4>
             <p>End-to-end encrypted file sync. Flutter + Python. True zero-knowledge.</p>
@@ -335,11 +394,11 @@
           </div>
         </div>
 
-        <div class="project-card">
-          <img src="https://raw.githubusercontent.com/dillionhuston/SHA-256-File-Hasher/main/screenshot.png" alt="SHA Hasher">
+        <div class="project-card" style="--i:2">
+          <img src="https://raw.githubusercontent.com/dillionhuston/SHA-256-File-Hasher/main/screenshot.png" alt="SHA Hasher" loading="lazy">
           <div class="project-body">
             <h4>SHA-256 File Hasher</h4>
-            <p>Ultra-fast duplicate finder. CLI + GUI. Pure Python.</p>
+            <p>Lightning-fast duplicate finder. CLI + GUI. Pure Python.</p>
             <div class="tech-tags">
               <span class="tag">Python</span>
               <span class="tag">Tkinter</span>
@@ -348,11 +407,11 @@
           </div>
         </div>
 
-        <div class="project-card">
-          <img src="https://raw.githubusercontent.com/dillionhuston/IPTV-Scanner-Beta/main/screenshot.png" alt="IPTV Scanner">
+        <div class="project-card" style="--i:3">
+          <img src="https://raw.githubusercontent.com/dillionhuston/IPTV-Scanner-Beta/main/screenshot.png" alt="IPTV Scanner" loading="lazy">
           <div class="project-body">
             <h4>IPTV Stream Cleaner</h4>
-            <p>Scans 10k+ streams, kills dead ones, exports clean M3U.</p>
+            <p>Scans 10k+ streams, kills dead links, exports clean M3U.</p>
             <div class="tech-tags">
               <span class="tag">Python</span>
               <span class="tag">Asyncio</span>
@@ -365,8 +424,10 @@
 
     <section class="contact" id="contact">
       <h2>Get In Touch</h2>
-      <p><a href="mailto:dillonh204@icloud.com">dillonh204@icloud.com</a></p>
-      <p style="margin-top:20px; color:var(--muted);">Open to freelance • internships • full-time backend roles</p>
+      <p style="font-size:1.6rem;margin:40px 0;">
+        <a href="mailto:dillonh204@icloud.com">dillonh204@icloud.com</a>
+      </p>
+      <p style="color:var(--muted);margin-top:20px;">Open to freelance • internships • full-time backend roles</p>
       <div class="social">
         <a href="https://github.com/dillionhuston" target="_blank">GitHub</a>
         <a href="https://linkedin.com/in/dillon-huston" target="_blank">LinkedIn</a>
