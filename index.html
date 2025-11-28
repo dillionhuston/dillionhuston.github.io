@@ -25,14 +25,12 @@
       overflow-x: hidden;
       cursor: default;
     }
-
     /* Animated Particle Background */
     #particles {
       position: fixed;
       inset: 0;
       z-index: -1;
     }
-
     header {
       min-height: 100vh;
       display: grid;
@@ -62,7 +60,6 @@
     }
     @keyframes typing { from { width: 0 } to { width: 36ch } }
     @keyframes blink { 50% { border-color: transparent } }
-
     .btn {
       padding: 14px 32px;
       margin: 12px;
@@ -78,10 +75,8 @@
       box-shadow: 0 0 30px rgba(57,255,132,0.4);
     }
     .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(57,255,132,0.6); }
-
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
     section { padding: 120px 0; }
-
     h2 {
       font-size: 3.5rem;
       text-align: center;
@@ -90,7 +85,6 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-
     /* Projects */
     .filters {
       text-align: center;
@@ -110,7 +104,6 @@
       background: var(--green);
       color: #000;
     }
-
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
@@ -137,6 +130,7 @@
       width: 100%;
       height: 220px;
       object-fit: cover;
+      background: var(--card);
     }
     .project-info {
       padding: 24px;
@@ -165,7 +159,6 @@
       font-size: 0.85rem;
       font-weight: 500;
     }
-
     /* Live GitHub Stats */
     .stats {
       display: flex;
@@ -185,7 +178,7 @@
       font-size: 2.8rem;
       color: var(--green);
     }
-
+    .loading { color: var(--gray); }
     /* Contact */
     .contact {
       text-align: center;
@@ -196,19 +189,19 @@
       font-weight: 600;
       font-size: 1.3rem;
     }
-
     footer {
       text-align: center;
       padding: 40px;
       color: var(--gray);
       font-size: 0.9rem;
     }
+    /* Image loading */
+    img { opacity: 0; transition: opacity 0.3s ease; }
+    img.loaded { opacity: 1; }
   </style>
 </head>
 <body>
-
   <canvas id="particles"></canvas>
-
   <header>
     <div class="hero">
       <h1>Dillon Huston</h1>
@@ -222,45 +215,42 @@
       </div>
     </div>
   </header>
-
   <div class="container">
-
     <section id="projects">
       <h2>Projects</h2>
-
       <div class="filters">
         <button class="filter-btn active" data-filter="all">All</button>
         <button class="filter-btn" data-filter="python">Python</button>
         <button class="filter-btn" data-filter="automation">Automation</button>
         <button class="filter-btn" data-filter="privacy">Privacy</button>
       </div>
-
       <div class="projects-grid">
-        <!-- Task Automation -->
-        <div class="project visible" data-tags="python automation">
-          <img src="https://your-task-dashboard-screenshot.png" alt="Task Automation" onerror="this.src='https://via.placeholder.com/600x220/121212/39ff84?text=TASK+AUTOMATION'"/>
+        <!-- Task Automation - Main Project -->
+        <div class="project visible" data-tags="python automation" style="grid-column: 1 / -1; max-width: 800px; margin: 0 auto;">
+          <img src="https://dillonhtask.netlify.app/tasks.png" alt="Task Automation Dashboard" loading="lazy" onerror="this.src='https://via.placeholder.com/800x220/121212/39ff84?text=TASK+AUTOMATION'" />
           <div class="project-info">
             <h3>Task Automation Platform</h3>
-            <p>Production-grade async scheduler • JWT • Celery + Redis • Email • Docker • Web dashboard</p>
+            <p>A task automation platform that runs locally with no subscriptions or limits. Production-grade async scheduler with JWT auth, Celery + Redis for reliable scheduling, email reminders, file cleanup, system tasks, and a web dashboard for managing scheduled, one-time, and recurring tasks. 100% local execution—no cloud, no tracking. Deploy anywhere with Docker.</p>
             <div class="tech-tags">
               <span class="tag">FastAPI</span>
               <span class="tag">Celery</span>
               <span class="tag">Redis</span>
               <span class="tag">Docker</span>
+              <span class="tag">JWT Auth</span>
+              <span class="tag">Email Reminders</span>
             </div>
             <div style="margin-top:20px;">
               <a href="https://github.com/dillionhuston/Task-Automation-API" target="_blank" class="btn btn-primary" style="font-size:0.9rem;padding:10px 20px;">GitHub</a>
-              <a href="https://dillonhtask.netlify.app" target="_blank" class="btn" style="border:2px solid var(--green);color:var(--green);font-size:0.9rem;padding:10px 20px;">Live →</a>
+              <a href="https://dillonhtask.netlify.app" target="_blank" class="btn" style="border:2px solid var(--green);color:var(--green);font-size:0.9rem;padding:10px 20px;">Live Demo</a>
             </div>
           </div>
         </div>
-
         <!-- ShadowBox -->
         <div class="project" data-tags="python privacy flutter">
-          <img src="https://github.com/dillionhuston/Shadow/blob/main/demo.gif?raw=true" alt="ShadowBox"/>
+          <img src="https://github.com/dillionhuston/Shadow/raw/main/demo.gif" alt="ShadowBox" loading="lazy" onerror="this.src='https://via.placeholder.com/600x220/121212/39ff84?text=SHADOWBOX'" />
           <div class="project-info">
             <h3>ShadowBox</h3>
-            <p>End-to-end encrypted file sync • Flutter + Python • Zero-knowledge</p>
+            <p>End-to-end encrypted file sync • Flutter + Python • Zero-knowledge privacy-first cloud storage with cross-device sync.</p>
             <div class="tech-tags">
               <span class="tag">Flutter</span>
               <span class="tag">FastAPI</span>
@@ -269,40 +259,37 @@
             <a href="https://github.com/dillionhuston/Shadow" target="_blank" class="btn btn-primary" style="margin-top:16px;display:inline-block;padding:10px 20px;font-size:0.9rem;">GitHub</a>
           </div>
         </div>
-
         <!-- SHA Hasher -->
         <div class="project" data-tags="python">
-          <img src="https://raw.githubusercontent.com/dillionhuston/SHA-256-File-Hasher/main/screenshot.png" alt="Hasher" onerror="this.src='https://via.placeholder.com/600x220/121212/39ff84?text=SHA256+HASHER'"/>
+          <img src="https://raw.githubusercontent.com/dillionhuston/SHA-256-File-Hasher/main/screenshot.png" alt="Hasher" loading="lazy" onerror="this.src='https://via.placeholder.com/600x220/121212/39ff84?text=SHA256+HASHER'" />
           <div class="project-info">
             <h3>SHA-256 File Hasher</h3>
-            <p>Ultra-fast duplicate finder • CLI + GUI • Pure Python</p>
+            <p>Ultra-fast duplicate finder • CLI + GUI • Pure Python for quick scans across multiple file types.</p>
             <div class="tech-tags"><span class="tag">Python</span><span class="tag">Tkinter</span></div>
             <a href="https://github.com/dillionhuston/SHA-256-File-Hasher" target="_blank" class="btn btn-primary" style="margin-top:16px;display:inline-block;padding:10px 20px;font-size:0.9rem;">GitHub</a>
           </div>
         </div>
-
         <!-- IPTV Scanner -->
         <div class="project" data-tags="python automation">
-          <img src="https://raw.githubusercontent.com/dillionhuston/IPTV-Scanner-Beta/main/screenshot.png" alt="IPTV" onerror="this.src='https://via.placeholder.com/600x220/121212/39ff84?text=IPTV+SCANNER'"/>
+          <img src="https://raw.githubusercontent.com/dillionhuston/IPTV-Scanner-Beta/main/screenshot.png" alt="IPTV" loading="lazy" onerror="this.src='https://via.placeholder.com/600x220/121212/39ff84?text=IPTV+SCANNER'" />
           <div class="project-info">
             <h3>IPTV Stream Cleaner</h3>
-            <p>Scans 10k+ streams • Removes dead links • Exports clean M3U</p>
+            <p>Scans 10k+ streams • Removes dead links • Exports clean M3U playlists for organized access.</p>
             <div class="tech-tags"><span class="tag">Python</span><span class="tag">Asyncio</span></div>
             <a href="https://github.com/dillionhuston/IPTV-Scanner-Beta" target="_blank" class="btn btn-primary" style="margin-top:16px;display:inline-block;padding:10px 20px;font-size:0.9rem;">GitHub</a>
           </div>
         </div>
       </div>
     </section>
-
     <!-- Live Stats -->
     <section>
       <div class="stats">
         <div class="stat-card">
-          <h3>28</h3>
+          <h3 id="repos">Loading...</h3>
           <p>GitHub Repos</p>
         </div>
         <div class="stat-card">
-          <h3>1.2k+</h3>
+          <h3 id="additions">Loading...</h3>
           <p>Lines Shipped This Month</p>
         </div>
         <div class="stat-card">
@@ -311,7 +298,6 @@
         </div>
       </div>
     </section>
-
     <!-- Contact -->
     <section class="contact" id="contact">
       <h2>Let's Build Something</h2>
@@ -320,23 +306,27 @@
       </p>
       <p>Freelance • Internships • Full-time Backend Roles</p>
     </section>
-
   </div>
-
   <footer>
     © 2025 Dillon Huston • Built with pure Python & caffeine
   </footer>
-
   <script>
+    // Image loading to prevent flicker
+    document.querySelectorAll('img').forEach(img => {
+      if (img.complete) {
+        img.classList.add('loaded');
+      } else {
+        img.addEventListener('load', () => img.classList.add('loaded'));
+      }
+    });
+
     // Particle background
     const canvas = document.getElementById('particles');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
     let particles = [];
     const mouse = { x: 0, y: 0 };
-
     class Particle {
       constructor(){
         this.x = Math.random() * canvas.width;
@@ -357,14 +347,12 @@
         ctx.fill();
       }
     }
-
     function init() {
       particles = [];
       for(let i = 0; i < 100; i++) {
         particles.push(new Particle());
       }
     }
-
     function animate() {
       ctx.clearRect(0,0,canvas.width,canvas.height);
       particles.forEach((p, i) => {
@@ -378,7 +366,6 @@
     }
     init();
     animate();
-
     window.addEventListener('resize', () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -390,7 +377,6 @@
       btn.addEventListener('click', () => {
         document.querySelector('.filter-btn.active').classList.remove('active');
         btn.classList.add('active');
-
         const filter = btn.dataset.filter;
         document.querySelectorAll('.project').forEach(proj => {
           if (filter === 'all' || proj.dataset.tags.includes(filter)) {
@@ -408,8 +394,43 @@
         if (entry.isIntersecting) entry.target.classList.add('visible');
       });
     }, { threshold: 0.1 });
-
     document.querySelectorAll('.project').forEach(p => observer.observe(p));
+
+    // Fetch and update GitHub stats
+    async function updateStats() {
+      try {
+        // Get public repos count
+        const userRes = await fetch('https://api.github.com/users/dillionhuston');
+        const userData = await userRes.json();
+        document.getElementById('repos').textContent = userData.public_repos || 0;
+        document.getElementById('repos').classList.remove('loading');
+
+        // Get additions for current month (approximate: last 30 days for "this month")
+        const now = new Date();
+        const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+        const since = oneMonthAgo.toISOString().split('T')[0];
+        const eventsRes = await fetch(`https://api.github.com/users/dillionhuston/events?per_page=100`);
+        const events = await eventsRes.json();
+        let totalAdditions = 0;
+        events.forEach(event => {
+          if (event.type === 'PushEvent' && new Date(event.created_at) > oneMonthAgo) {
+            event.payload.commits.forEach(commit => {
+              totalAdditions += commit.additions || 0;
+            });
+          }
+        });
+        document.getElementById('additions').textContent = totalAdditions.toLocaleString() || '0';
+        document.getElementById('additions').classList.remove('loading');
+      } catch (error) {
+        console.error('Error fetching GitHub stats:', error);
+        document.getElementById('repos').textContent = 'N/A';
+        document.getElementById('additions').textContent = 'N/A';
+      }
+    }
+    updateStats();
+
+    // Refresh stats every 5 minutes (300000 ms)
+    setInterval(updateStats, 300000);
   </script>
 </body>
 </html>
