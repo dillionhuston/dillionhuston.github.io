@@ -1,370 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dillon Huston | Backend Engineer</title>
-  <meta name="description" content="18 y/o self-taught backend dev. Python • FastAPI • Docker • No AI. Just code that runs forever."/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dillon Huston · Backend Developer</title>
+  <meta name="description" content="Backend developer from Belfast. Python, FastAPI, Docker, networking, security. No AI. Just code.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    :root {
-      --bg: #0a0a0a;
-      --card: #0f0f0f;
-      --border: #1a1a1a;
-      --text: #e0e0e0;
-      --muted: #888;
-      --green: #39ff84;
-      --green-glow: rgba(57,255,132,0.4);
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
+
     body {
+      background: #0b0b0f;
+      color: #e4e4e7;
       font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-      min-height: 100vh;
-      padding: 40px 20px;
-      position: relative;
-      overflow-x: hidden;
+      line-height: 1.6;
+      padding: 3rem 1.5rem;
     }
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: 
-        radial-gradient(circle at 20% 80%, var(--green-glow) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(100,100,255,0.08) 0%, transparent 50%);
-      pointer-events: none;
-      animation: breathe 20s infinite alternate;
-    }
-    @keyframes breathe { 0% { opacity: 0.7; } 100% { opacity: 1; } }
 
     .container {
-      max-width: 1100px;
-      width: 100%;
+      max-width: 1000px;
       margin: 0 auto;
-    }
-    header {
-      text-align: center;
-      margin-bottom: 100px;
-      animation: fadeIn 1.2s ease-out;
-    }
-    header h1 {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: clamp(3.5rem, 10vw, 7rem);
-      font-weight: 700;
-      background: linear-gradient(90deg, var(--green), #39ff84);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: -2px;
-      text-shadow: 0 0 40px var(--green-glow);
-    }
-    header p {
-      font-size: 1.5rem;
-      color: var(--green);
-      font-family: 'JetBrains Mono', monospace;
-      margin: 20px 0 30px;
-      text-shadow: 0 0 20px var(--green-glow);
-    }
-    header .subtitle {
-      font-size: 1.3rem;
-      color: var(--muted);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    .btn {
-      display: inline-block;
-      padding: 16px 36px;
-      margin: 12px;
-      border-radius: 12px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.4s ease;
-    }
-    .btn-primary {
-      background: var(--green);
-      color: #000;
-      box-shadow: 0 0 50px var(--green-glow);
-    }
-    .btn-primary:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 0 80px var(--green-glow);
-    }
-    .btn-outline {
-      border: 2px solid var(--green);
-      color: var(--green);
-    }
-    .btn-outline:hover {
-      background: var(--green);
-      color: #000;
     }
 
-    section {
-      margin-bottom: 120px;
-    }
-    h2 {
+    /* typography */
+    h1, h2, h3, .mono {
       font-family: 'JetBrains Mono', monospace;
+    }
+
+    h1 {
       font-size: 3.2rem;
-      color: var(--green);
-      text-align: center;
-      margin-bottom: 60px;
-      position: relative;
-    }
-    h2::after {
-      content: '';
-      position: absolute;
-      bottom: -16px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 4px;
-      background: var(--green);
-      border-radius: 2px;
-      box-shadow: 0 0 20px var(--green-glow);
+      font-weight: 600;
+      letter-spacing: -1px;
+      color: #4ade80;
+      margin-bottom: 0.5rem;
     }
 
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 32px;
-    }
-    .project {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
-      transition: all 0.5s ease;
-      animation: fadeInUp 1s ease-out forwards;
-      opacity: 0;
-      transform: translateY(40px);
-    }
-    .project:nth-child(1) { animation-delay: 0.1s; }
-    .project:nth-child(2) { animation-delay: 0.2s; }
-    .project:nth-child(3) { animation-delay: 0.3s; }
-    .project:hover {
-      transform: translateY(-16px);
-      border-color: var(--green);
-      box-shadow: 0 30px 70px rgba(57,255,132,0.35);
-    }
-    .project-img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      background: linear-gradient(135deg, #111, #1a1a1a);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #555;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.1rem;
-      transition: transform 0.6s ease;
-    }
-    .project:hover .project-img {
-      transform: scale(1.08);
-    }
-    .project-img::before {
-      content: attr(data-title);
-    }
-    .project-body {
-      padding: 32px;
-    }
-    .project h3 {
-      font-family: 'JetBrains Mono', monospace;
+    h2 {
       font-size: 1.8rem;
-      color: var(--green);
-      margin-bottom: 16px;
+      font-weight: 500;
+      color: #4ade80;
+      margin: 2.5rem 0 1.5rem 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #2a2a2f;
     }
-    .project p {
-      color: #ccc;
-      margin-bottom: 24px;
-      line-height: 1.7;
-    }
-    .project a {
-      color: var(--green);
+
+    h3 {
+      font-size: 1.35rem;
       font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      color: #4ade80;
+      margin-bottom: 0.75rem;
     }
-    .project a:hover {
+
+    /* header */
+    .header {
+      margin-bottom: 3rem;
+      border-left: 3px solid #4ade80;
+      padding-left: 1.5rem;
+    }
+
+    .tagline {
+      color: #9ca3af;
+      font-size: 1.1rem;
+      margin: 0.75rem 0 1rem 0;
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .links a {
+      color: #4ade80;
+      text-decoration: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      border: 1px solid #2a2a2f;
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .links a:hover {
+      background: #4ade8010;
+      border-color: #4ade80;
+    }
+
+    /* about text */
+    .about p {
+      margin-bottom: 1rem;
+      color: #cbd5e1;
+    }
+
+    /* project cards */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .project-card {
+      background: #111114;
+      border: 1px solid #222226;
+      border-radius: 12px;
+      padding: 1.4rem;
+      transition: border 0.2s ease;
+    }
+
+    .project-card:hover {
+      border-color: #4ade8033;
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .tech-stack span {
+      background: #1a1a1f;
+      color: #4ade80;
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      letter-spacing: -0.2px;
+    }
+
+    .project-links {
+      margin-top: 1rem;
+    }
+
+    .project-links a {
+      color: #4ade80;
+      text-decoration: none;
+      font-size: 0.85rem;
+      margin-right: 1.2rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .project-links a i {
+      margin-right: 0.2rem;
+    }
+
+    .project-links a:hover {
       text-decoration: underline;
     }
 
-    .tech-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 20px 0;
-    }
-    .tag {
-      background: rgba(57,255,132,0.12);
-      color: var(--green);
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-size: 0.9rem;
+    /* meetup block */
+    .meetup-block {
+      background: #111114;
+      border-left: 3px solid #4ade80;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 0 12px 12px 0;
     }
 
-    #contact {
+    .meetup-block p {
+      margin: 0.75rem 0;
+      color: #cbd5e1;
+    }
+
+    /* footer */
+    .footer {
+      margin-top: 3.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #222226;
       text-align: center;
-      padding: 100px 0;
-    }
-    #contact a {
-      color: var(--green);
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 32px;
-      margin-top: 40px;
-    }
-    .social-links a {
-      font-size: 2.4rem;
-      color: var(--green);
-      transition: 0.4s;
-    }
-    .social-links a:hover {
-      transform: translateY(-8px) scale(1.2);
+      font-size: 0.8rem;
+      color: #6b7280;
     }
 
-    footer {
-      text-align: center;
-      padding: 40px 0;
-      color: var(--muted);
-      font-size: 0.95rem;
-      border-top: 1px solid var(--border);
+    a {
+      color: #4ade80;
+      text-decoration: none;
     }
 
-    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-    @keyframes fadeInUp {
-      from { opacity:0; transform:translateY(40px); }
-      to { opacity:1; transform:translateY(0); }
-    }
-
-    @media (max-width: 768px) {
-      header h1 { font-size: 4.5rem; }
-      .projects { grid-template-columns: 1fr; }
-      section { margin-bottom: 80px; }
+    @media (max-width: 680px) {
+      body { padding: 1.5rem; }
+      h1 { font-size: 2.2rem; }
+      .header { padding-left: 1rem; }
     }
   </style>
 </head>
 <body>
-
-  <div class="container">
-    <header>
-      <h1>Dillon Huston</h1>
-      <p>No AI. Just code that runs forever.</p>
-      <p class="subtitle">18 y/o self-taught backend engineer • UK<br>FastAPI + Celery + Docker • Shipping real tools daily</p>
-      <div style="margin-top:40px;">
-        <a href="#projects" class="btn btn-primary">See My Work</a>
-        <a href="mailto:dillonh204@icloud.com" class="btn btn-outline">Email Me</a>
-      </div>
-    </header>
-
-    <section id="projects">
-      <h2>Projects</h2>
-      <div class="projects">
-
-        <!-- TASK AUTOMATION - THE KING -->
-        <article class="project">
-          <div class="project-img" data-title="Task Automation Platform">
-            <img src="https://dillonhtask.netlify.app/tasks.png" alt="Task Automation Dashboard" loading="lazy" onerror="this.style.display='none'">
-          </div>
-          <div class="project-body">
-            <h3>Task Automation Platform</h3>
-            <p>Production-grade local task scheduler I use every day. Unlimited tasks, sub-second execution, email reminders, file cleanup, recurring jobs — all 100% local. FastAPI + Celery + Redis + Docker. No cloud. No limits.</p>
-            <div class="tech-tags">
-              <span class="tag">FastAPI</span>
-              <span class="tag">Celery</span>
-              <span class="tag">Redis</span>
-              <span class="tag">Docker</span>
-              <span class="tag">JWT</span>
-            </div>
-            <a href="https://github.com/dillionhuston/Task-Automation-API" target="_blank">
-              GitHub <i class="fab fa-github"></i>
-            </a>
-            <a href="https://dillonhtask.netlify.app" target="_blank" style="margin-left:20px;">
-              Live Demo <i class="fas fa-external-link-alt"></i>
-            </a>
-          </div>
-        </article>
-
-        <!-- SHADOWBOX -->
-        <article class="project">
-          <div class="project-img" data-title="ShadowBox • Encrypted Sync">
-            <img src="https://github.com/dillionhuston/Shadow/raw/main/demo.gif" alt="ShadowBox" loading="lazy" onerror="this.style.display='none'">
-          </div>
-          <div class="project-body">
-            <h3>ShadowBox</h3>
-            <p>End-to-end encrypted file sync across devices. Flutter frontend + Python backend. True zero-knowledge — even I can't read your files.</p>
-            <div class="tech-tags">
-              <span class="tag">Flutter</span>
-              <span class="tag">FastAPI</span>
-              <span class="tag">E2EE</span>
-            </div>
-            <a href="https://github.com/dillionhuston/Shadow" target="_blank">
-              GitHub <i class="fab fa-github"></i>
-            </a>
-          </div>
-        </article>
-
-        <!-- SHA HASHER -->
-        <article class="project">
-          <div class="project-img" data-title="SHA-256 File Hasher">
-            <img src="https://raw.githubusercontent.com/dillionhuston/SHA-256-File-Hasher/main/screenshot.png" alt="Hasher" loading="lazy" onerror="this.style.display='none'">
-          </div>
-          <div class="project-body">
-            <h3>SHA-256 File Hasher</h3>
-            <p>Ultra-fast duplicate finder. Scans massive directories in seconds using pure Python. CLI + GUI versions.</p>
-            <div class="tech-tags">
-              <span class="tag">Python</span>
-              <span class="tag">Tkinter</span>
-            </div>
-            <a href="https://github.com/dillionhuston/SHA-256-File-Hasher" target="_blank">
-              GitHub <i class="fab fa-github"></i>
-            </a>
-          </div>
-        </article>
-
-        <!-- IPTV SCANNER -->
-        <article class="project">
-          <div class="project-img" data-title="IPTV Stream Cleaner">
-            <img src="https://raw.githubusercontent.com/dillionhuston/IPTV-Scanner-Beta/main/screenshot.png" alt="IPTV Scanner" loading="lazy" onerror="this.style.display='none'">
-          </div>
-          <div class="project-body">
-            <h3>IPTV Stream Cleaner</h3>
-            <p>Scans 10k+ IPTV streams concurrently with asyncio, removes dead links, exports clean M3U. Built for power users.</p>
-            <div class="tech-tags">
-              <span class="tag">Python</span>
-              <span class="tag">Asyncio</span>
-            </div>
-            <a href="https://github.com/dillionhuston/IPTV-Scanner-Beta" target="_blank">
-              GitHub <i class="fab fa-github"></i>
-            </a>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-    <section id="contact">
-      <h2>Get In Touch</h2>
-      <p style="font-size:1.4rem;margin:30px 0;">
-        <a href="mailto:dillonh204@icloud.com">dillonh204@icloud.com</a>
-      </p>
-      <p style="color:var(--muted);margin-bottom:40px;">Freelance • Internships • Full-time Backend Roles</p>
-      <div class="social-links">
-        <a href="https://github.com/dillionhuston" target="_blank" aria-label="GitHub">GitHub</a>
-        <a href="https://linkedin.com/in/dillon-huston" target="_blank" aria-label="LinkedIn">LinkedIn</a>
-      </div>
-    </section>
-
-    <footer>
-      © 2025 Dillon Huston • Built with pure Python & caffeine
-    </footer>
+<div class="container">
+  <div class="header">
+    <h1>Dillon Huston</h1>
+    <div class="tagline">Backend developer / Python · FastAPI · Docker · Networking / Belfast</div>
+    <div class="links">
+      <a href="www.linkedin.com/in/dillonhuston"><i class="far fa-envelope"></i> linkedin</a>
+      <a href="https://github.com/dillionhuston" target="_blank"><i class="fab fa-github"></i> github</a>
+      <a href="https://dev.to/dillionhuston" target="_blank"><i class="fab fa-dev"></i> dev.to</a>
+      <a href="https://routereality.co.uk" target="_blank"><i class="fas fa-bus"></i> routereality.co.uk</a>
+    </div>
   </div>
 
+  <section class="about">
+    <h2>About</h2>
+    <p>Hello. I'm Dillon, an 18-year-old backend developer from Belfast, Northern Ireland. I started working with technology at 13, writing small scripts that barely ran, but I enjoyed figuring out how systems worked and making them do useful things.</p>
+    <p>In January 2023, I began freelancing, building small tools, and teaching myself Python properly. Since then I've built APIs, task schedulers, encrypted storage, networking tools, and real-time tracking systems.</p>
+    <p>My most recent project is <strong>RouteReality</strong>: a live community-powered tracker for Translink buses. Frustrated by ghost buses and unreliable timetables, I built a system that combines user reports and weighted averages to deliver accurate ETAs across 17,000+ stops. It runs 24/7 on FastAPI and PostgreSQL (v2.0 launched April 2026).</p>
+    <p>Beyond backend work, I focus on networking, system monitoring, and privacy-focused tools. I am open to junior backend roles, internships, or collaboration, particularly on Python/FastAPI projects or initiatives that improve Network security or research</p>
+  </section>
+
+  <h2>Projects</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <h3>RouteReality</h3>
+      <p>Real-time bus tracking and ETA prediction for Belfast. Combines static timetables, live user reports, and weighted averages. JWT auth, leaderboard system.</p>
+      <div class="tech-stack"><span>FastAPI</span><span>PostgreSQL</span><span>JWT</span><span>Python</span></div>
+      <div class="project-links"><a href="https://routereality.co.uk" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a><a href="https://github.com/dillionhuston" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+    </div>
+    <div class="project-card">
+      <h3>Task Automation Platform</h3>
+      <p>Local task scheduler used daily. Unlimited tasks, sub-second execution, email reminders, file cleanup, recurring jobs. FastAPI, Celery, Redis, Docker.</p>
+      <div class="tech-stack"><span>FastAPI</span><span>Celery</span><span>Redis</span><span>Docker</span></div>
+      <div class="project-links"><a href="https://github.com/dillionhuston/Task-Automation-API" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+    </div>
+    <div class="project-card">
+      <h3>ShadowBox </h3>
+      <p>End-to-end encrypted file sync across devices if backend is launched locally, it can be launched public also. Client-side AES-256. Server never sees plaintext. Flutter frontend, FastAPI backend.</p>
+      <div class="tech-stack"><span>Flutter</span><span>FastAPI</span><span>AES-256</span><span>E2EE</span></div>
+      <div class="project-links"><a href="https://github.com/dillionhuston/Shadow" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+    </div>
+    <div class="project-card">
+      <h3>IPTV Stream Cleaner</h3>
+      <p>Asynchronous scanner that tests IPTV streams concurrently, verifies live streams, removes dead links. Exports clean M3U and JSON.</p>
+      <div class="tech-stack"><span>Python</span><span>Asyncio</span><span>Networking</span></div>
+      <div class="project-links"><a href="https://github.com/dillionhuston/IPTV-Scanner-Beta" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+    </div>
+    <div class="project-card">
+      <h3>SHA-256 File Hasher</h3>
+      <p>Fast duplicate file finder. Scans large directories, SHA-256 based. CLI based</p>
+      <div class="tech-stack"><span>Python</span><span>Tkinter</span><span>Hashing</span></div>
+      <div class="project-links"><a href="https://github.com/dillionhuston/SHA-256-File-Hasher" target="_blank"><i class="fab fa-github"></i> GitHub</a></div>
+    </div>
+    <div class="project-card">
+      <h3>Home Network Monitor</h3>
+      <p>Device discovery, bandwidth tracking, for self-hosted networks.</p>
+      <div class="tech-stack"><span>Python</span><span>Networking</span><span>Linux</span></div>
+      <div class="project-links"><a href="https://github.com/dillionhuston" target="_blank"><i class="fab fa-github"></i> GitHub (contact)</a></div>
+    </div>
+  </div>
+
+  <h2>Community</h2>
+  <div class="meetup-block">
+    <h3 style="margin:0 0 0.5rem 0">Belfast NetSec</h3>
+    <p>NetSec Belfast is a tech community bringing together curious minds for hands-on security work.
+    <p><a href="https://www.meetup.com/belfast-netsec/" target="_blank"><i class="fab fa-meetup"></i> meetup.com/belfast-netsec/</a></p>
+  </div>
+
+  <div class="footer">
+    Dillon Huston backend, networking, security  Belfast
+  </div>
+</div>
 </body>
 </html>
